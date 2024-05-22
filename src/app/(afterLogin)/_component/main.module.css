@@ -1,0 +1,15 @@
+.mainWrapper{
+  padding-left: 100px;
+  padding-right: 100px;
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  @media (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr;
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  @media (max-width: 700px) {
+      grid-template-columns: 1fr;
+  }
+}
