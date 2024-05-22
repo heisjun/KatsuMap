@@ -1,0 +1,17 @@
+.container {
+    background-color: #fff;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.headerWrapper{
+    display: flex;
+    justify-content: space-between;
+
+}
+.rigntSection{
+    display: flex;
+}
+.rigntSection div{
+    padding-right: 50px;
+}
