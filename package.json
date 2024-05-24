@@ -19,7 +19,8 @@
     "express": "^4.19.2",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-kakao-maps-sdk": "^1.1.26"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -29,6 +30,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "kakao.maps.d.ts": "^0.1.39",
     "msw": "^2.3.0",
     "typescript": "^5"
   },
