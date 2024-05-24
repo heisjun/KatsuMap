@@ -10,9 +10,9 @@ export default function KatsuInfo({ info }: Props) {
   return (
     <KatsuArticle post={target}>
       <img src={info.image} className={styles.storeImage} />
-      <div className={styles.storeTitle}>제목</div>
-      <div className={styles.storeName}>가게이름</div>
-      <div className={styles.storeLocation}>위치</div>
+      <div className={styles.storeTitle}>{info.title}</div>
+      <div className={styles.storeName}>{info.name}</div>
+      <div className={styles.storeLocation}>주소</div>
     </KatsuArticle>
   );
 }

@@ -7,14 +7,14 @@ import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
 
 export default function KatsuList() {
-  const { data } = useQuery({
+  const { data } = useQuery<IKatsuInfo[], Object, IKatsuInfo[]>({
     queryKey: ["store", "info"],
     queryFn: getStoreInfo,
   });
 
   return (
     <main className={styles.mainWrapper}>
-      {data.map((item: IKatsuInfo, idx: any) => {
+      {data?.map((item: IKatsuInfo, idx: any) => {
         return <KatsuInfo info={item} key={item.name} />;
       })}
     </main>

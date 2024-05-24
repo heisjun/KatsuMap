@@ -12,11 +12,13 @@
 .storeTitle{
     font-size: 24px;
     font-weight: 600;
+    padding: 10px 0px;
+    height: 80px;
 }
 
 .storeName{
-    font-size: 10px;
+    font-size: 16px;
 }
 .storeLocation{
-    font-size: 10px;
+    font-size: 16px;
 }
