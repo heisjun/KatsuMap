@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import style from "@/app/(afterLogin)/layout.module.css";
 import RQProvider from "./_component/RQProvider";
+import Link from "next/link";
 
 type Props = { children: ReactNode; modal: ReactNode };
 export default async function AfterLoginLayout({ children, modal }: Props) {
@@ -9,7 +10,9 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
       <RQProvider>
         <header className={style.headerWrapper}>
           <section className={style.leftSection}>
-            <div>로고</div>
+            <Link href={"/"}>
+              <img src="/Logo.png" alt="로고" />
+            </Link>
           </section>
           <section className={style.rigntSection}>
             <div>돈카츠맵 소개</div>

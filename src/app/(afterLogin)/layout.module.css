@@ -1,17 +1,32 @@
 .container {
     background-color: #fff;
-    margin-left: 100px;
-    margin-right: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .headerWrapper{
+    width: 100%;
+    max-width: 1240px;
+    padding: 16px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
 
+.leftSection img{
+    width: 80px;
+    height: auto;
 }
 .rigntSection{
     display: flex;
 }
 .rigntSection div{
-    padding-right: 50px;
+    padding-left: 50px;
+    font-size: 18px;
+}
+
+.main {
+    max-width: 1240px;
 }
