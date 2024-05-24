@@ -1,9 +1,17 @@
+interface Menu {
+  menuName: string;
+  price: string;
+}
 export interface IKatsuInfo {
   name: string;
+  title: string;
   explain: string;
-  price: number;
-  store: string;
+  menu: Menu[];
   image: string;
-  quantity: number;
-  select: boolean;
+  location: {
+    lat: string;
+    lng: string;
+  };
+  postId: string;
+  time: string;
 }
