@@ -1,11 +1,9 @@
-import styles from "@/app/(afterLogin)/[storename]/storeInfo.module.css";
 import KatsuDetail from "./_component/katsuDetail";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { getStoreInfo } from "../_lib/getStoreInfo";
 import { getSingleKatsuInfo } from "./_lib/getSingleKatsuInfo";
 
 interface Props {

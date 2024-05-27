@@ -3,8 +3,8 @@ import style from "@/app/(afterLogin)/layout.module.css";
 import RQProvider from "./_component/RQProvider";
 import Link from "next/link";
 
-type Props = { children: ReactNode; modal: ReactNode };
-export default async function AfterLoginLayout({ children, modal }: Props) {
+type Props = { children: ReactNode };
+export default async function AfterLoginLayout({ children }: Props) {
   return (
     <div className={style.container}>
       <RQProvider>
