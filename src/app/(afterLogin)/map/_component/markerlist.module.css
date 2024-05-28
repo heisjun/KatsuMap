@@ -1,0 +1,72 @@
+.mainWrapper{
+    position:relative;
+    overflow:hidden;
+}
+
+
+
+.infoWrapper{
+    padding: 2px;
+}
+
+.storeName{
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+
+.iconWrapper{
+    position:absolute;
+    overflow:hidden;
+    top:10px;
+    left:10px;
+    width:auto;
+    height:auto;
+    z-index:10;
+    font-family:'Malgun Gothic','맑은 고딕',sans-serif;
+    font-size:12px;
+    text-align:center;
+    background-color:none;
+}
+
+.positionIcon{
+    width: 38px;
+    height: 38px;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.controlIcon{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.decreaseBtn{
+    margin-top: 10px;
+    width: 38px;
+    height: 38px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 6px 6px 0px 0px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.increaseBtn {
+    width: 38px;
+    height: 38px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    box-shadow: 0 0px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+    border-radius: 0px 0px 6px 6px;
+}

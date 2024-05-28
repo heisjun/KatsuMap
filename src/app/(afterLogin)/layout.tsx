@@ -4,7 +4,7 @@ import RQProvider from "./_component/RQProvider";
 import Link from "next/link";
 
 type Props = { children: ReactNode };
-export default async function AfterLoginLayout({ children }: Props) {
+export default function AfterLoginLayout({ children }: Props) {
   return (
     <div className={style.container}>
       <RQProvider>
@@ -15,7 +15,9 @@ export default async function AfterLoginLayout({ children }: Props) {
             </Link>
           </section>
           <section className={style.rigntSection}>
-            <div>돈카츠맵 소개</div>
+            <Link href={"/map"}>
+              <div>돈카츠맵 소개</div>
+            </Link>
             <div>로그인</div>
             <div>마이페이지</div>
             <div>언어선택</div>
