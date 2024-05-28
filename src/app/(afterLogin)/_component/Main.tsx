@@ -1,5 +1,3 @@
-import styles from "@/app/(afterLogin)/_component/main.module.css";
-import KatsuInfo from "./KatsuInfo";
 import {
   HydrationBoundary,
   QueryClient,

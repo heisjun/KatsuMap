@@ -1,10 +1,8 @@
 "use client";
 
-import styles from "@/app/(afterLogin)/_component/main.module.css";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IKatsuInfo } from "@/model/KatsuInfo";
 import { getSingleKatsuInfo } from "../_lib/getSingleKatsuInfo";
-
 import BasicMap from "../../_component/Map";
 
 interface Props {
