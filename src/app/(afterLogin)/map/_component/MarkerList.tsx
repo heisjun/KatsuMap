@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
 import KatsuInfo from "../../_component/KatsuInfo";
-import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, MapMarker, useMap } from "react-kakao-maps-sdk";
 import { Map } from "react-kakao-maps-sdk";
 import useGeolocation from "../../_component/useGeolocation";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
@@ -79,6 +79,17 @@ export default function MarkerList() {
     }
   };
 
+  const EventMarkerContainer = ({ position }: any) => {
+    const map = useMap();
+
+    return (
+      <MapMarker
+        position={position} // 마커를 표시할 위치
+        onClick={(marker) => map.panTo(marker.getPosition())}
+      ></MapMarker>
+    );
+  };
+
   return (
     <div className={styles.mainWrapper}>
       {location.loaded && (
@@ -106,7 +117,7 @@ export default function MarkerList() {
           {/* 모든 돈까스집 마커 */}
           {data?.map((item: IKatsuInfo) => (
             <Fragment key={`${item.location.lat}-${item.location.lng}`}>
-              <MapMarker
+              <EventMarkerContainer
                 position={{
                   lat: Number(item.location.lat),
                   lng: Number(item.location.lng),
