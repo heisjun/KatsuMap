@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { MSWComponent } from "./_component/MSWComponent";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,13 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script src={KakaoAPI} strategy="beforeInteractive" />
+        <Script src={KakaoAPI} />
       </head>
-
-      <body className={inter.className}>
-        <MSWComponent />
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
