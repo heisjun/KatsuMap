@@ -15,7 +15,7 @@ export default function KatsuArticle({ children, post }: Props) {
   let target = post;
 
   const onClick = () => {
-    router.push(`/${target.name}`);
+    router.push(`/${target.post_id}`);
   };
 
   return (

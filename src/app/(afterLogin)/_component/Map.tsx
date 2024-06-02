@@ -14,8 +14,8 @@ export default function BasicMap({ store }: Props) {
       id="map"
       center={{
         // 지도의 중심좌표
-        lat: Number(store.location.lat),
-        lng: Number(store.location.lng),
+        lat: Number(store.lat),
+        lng: Number(store.lng),
       }}
       style={{
         // 지도의 크기
@@ -27,15 +27,15 @@ export default function BasicMap({ store }: Props) {
       <MapMarker // 마커를 생성합니다
         position={{
           // 마커가 표시될 위치입니다
-          lat: Number(store.location.lat),
-          lng: Number(store.location.lng),
+          lat: Number(store.lat),
+          lng: Number(store.lng),
         }}
       ></MapMarker>
       <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
         // 커스텀 오버레이가 표시될 위치입니다
         position={{
-          lat: Number(store.location.lat),
-          lng: Number(store.location.lng),
+          lat: Number(store.lat),
+          lng: Number(store.lng),
         }}
         yAnchor={0}
       >

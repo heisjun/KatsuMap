@@ -133,19 +133,19 @@ export default function MarkerList() {
           />
           {/* 모든 돈까스집 마커 */}
           {data?.map((item: IKatsuInfo, idx) => (
-            <Fragment key={`${item.location.lat}-${item.location.lng}`}>
+            <Fragment key={`${item.lat}-${item.lng}`}>
               <EventMarkerContainer
                 position={{
-                  lat: Number(item.location.lat),
-                  lng: Number(item.location.lng),
+                  lat: Number(item.lat),
+                  lng: Number(item.lng),
                 }} // 마커를 표시할 위치
                 index={idx}
               />
               <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
                 // 커스텀 오버레이가 표시될 위치입니다
                 position={{
-                  lat: Number(item.location.lat),
-                  lng: Number(item.location.lng),
+                  lat: Number(item.lat),
+                  lng: Number(item.lng),
                 }}
                 yAnchor={0}
               >
@@ -157,8 +157,8 @@ export default function MarkerList() {
               {isOpen[idx] && (
                 <CustomOverlayMap
                   position={{
-                    lat: Number(item.location.lat),
-                    lng: Number(item.location.lng),
+                    lat: Number(item.lat),
+                    lng: Number(item.lng),
                   }}
                 >
                   <div className="wrap">
@@ -167,7 +167,7 @@ export default function MarkerList() {
                         카카오 스페이스닷원
                         <div
                           className="close"
-                          onClick={() => setIsOpen(false)}
+                          onClick={() => setIsOpen([false])}
                           title="닫기"
                         ></div>
                       </div>

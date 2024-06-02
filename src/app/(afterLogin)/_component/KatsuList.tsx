@@ -15,7 +15,7 @@ export default function KatsuList() {
   return (
     <main className={styles.mainWrapper}>
       {data?.map((item: IKatsuInfo, idx: any) => {
-        return <KatsuInfo info={item} key={item.name} />;
+        return <KatsuInfo info={item} key={item.post_id} />;
       })}
     </main>
   );

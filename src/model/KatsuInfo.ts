@@ -3,15 +3,13 @@ interface Menu {
   price: string;
 }
 export interface IKatsuInfo {
+  post_id: string;
   name: string;
   title: string;
   explain: string;
-  menu: Menu[];
-  image: string;
-  location: {
-    lat: string;
-    lng: string;
-  };
-  postId: string;
+  image_url: string;
+  lat: string;
+  lng: string;
   time: string;
+  menu: string;
 }
