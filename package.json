@@ -7,18 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "mock": "npx tsx watch ./src/mocks/http.ts"
+    "seed": "node -r dotenv/config ./src/scripts/seed.js"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.4.1",
-    "@mswjs/http-middleware": "^0.10.1",
-    "@tanstack/react-query": "^5.37.1",
+    "@tanstack/react-query": "^5.40.0",
     "@tanstack/react-query-devtools": "^5.37.1",
+    "@vercel/postgres": "^0.8.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "D": "^1.0.0",
     "express": "^4.19.2",
     "lodash": "^4.17.21",
-    "next": "13.2",
+    "next": "^14.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
@@ -31,13 +32,10 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv": "^16.4.5",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "kakao.maps.d.ts": "^0.1.39",
-    "msw": "^2.3.0",
     "typescript": "^5"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
