@@ -1,0 +1,68 @@
+.btnBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 498px;
+    background-color: white;
+    padding: 11px 16px;
+    width: 91px;
+    height: 38px;
+    z-index: 100;
+}
+
+.arrowStyle{
+    font-size: 30px;
+    color: #4a4a4a;
+    line-height: 150%;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.arrowStyle :hover{
+    color: #9b9b9b;
+}
+
+.arrowStyle img{
+    width: 17px;
+}
+
+.salsh{
+    transform: rotate(-30deg);
+    height: 80%;
+}
+
+.bannerBox{
+    max-width: 1240px;
+    width: 100%;
+    display: flex;
+    margin: 40px 0px 0px 0px;
+}
+
+.mainBannerContainer{
+    position: relative;
+    display: flex;
+    height: 480px;
+    background-color: #f8f8f8;
+}
+
+.imgContainer{
+    position: relative;
+    height: 500px;
+    padding-right: 10px;
+}
+
+.imgContainer img{
+    width: 500px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dotBox{
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.dot{
+  
+}
