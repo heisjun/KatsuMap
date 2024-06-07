@@ -12,7 +12,7 @@ export default function KatsuInfo({ info }: Props) {
       <img src={info.image_url} className={styles.storeImage} />
       <div className={styles.storeTitle}>{info.title}</div>
       <div className={styles.storeName}>{info.name}</div>
-      <div className={styles.storeLocation}>주소</div>
+      <div className={styles.storeLocation}>{info.address}</div>
     </KatsuArticle>
   );
 }

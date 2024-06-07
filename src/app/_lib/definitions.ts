@@ -11,6 +11,7 @@ export type KatsuInfo = {
   image_url: string;
   lat: string;
   lng: string;
+  address: string;
   time: string;
   menu: string;
 };

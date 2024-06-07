@@ -1,7 +1,3 @@
-interface Menu {
-  menuName: string;
-  price: string;
-}
 export interface IKatsuInfo {
   post_id: string;
   name: string;
@@ -10,6 +6,7 @@ export interface IKatsuInfo {
   image_url: string;
   lat: string;
   lng: string;
+  address: string;
   time: string;
   menu: string;
 }
