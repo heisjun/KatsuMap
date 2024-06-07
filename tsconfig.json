@@ -27,7 +27,10 @@
         "./src/*"
       ]
     },
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "kakao.maps.d.ts"
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -38,7 +41,5 @@
   "exclude": [
     "node_modules"
   ],
-  "types": [
-    "kakao.maps.d.ts"
-  ]
+ 
 }
