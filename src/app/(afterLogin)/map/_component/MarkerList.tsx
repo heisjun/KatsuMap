@@ -109,124 +109,131 @@ export default function MarkerList() {
 
   return (
     <div className={styles.mainWrapper}>
-      {location.loaded && (
-        <Map // 지도를 표시할 Container
-          center={center}
-          style={{
-            // 지도의 크기
-            width: "1400px",
-            height: "500px",
-            position: "relative",
-          }}
-          level={defaultLevel} // 지도의 확대 레벨
-          zoomable={true}
-          ref={mapRef}
-          onCenterChanged={updateCenterWhenMapMoved}
-        >
-          {/* 현위치 마커 */}
-          <MapMarker
-            position={position} // 마커를 표시할 위치
-            image={{
-              src: "https://t1.daumcdn.net/localimg/localimages/07/2018/mw/m640/ico_marker.png",
-              size: { width: 30, height: 30 },
+      {!location.loaded ? (
+        <div>로딩중</div>
+      ) : (
+        <>
+          <Map // 지도를 표시할 Container
+            center={center}
+            style={{
+              // 지도의 크기
+              width: "100%",
+              height: "500px",
+              position: "relative",
             }}
-          />
-          {/* 모든 돈까스집 마커 */}
-          {data?.map((item: IKatsuInfo, idx) => (
-            <Fragment key={`${item.lat}-${item.lng}`}>
-              <EventMarkerContainer
-                position={{
-                  lat: Number(item.lat),
-                  lng: Number(item.lng),
-                }} // 마커를 표시할 위치
-                index={idx}
-              />
-              <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-                // 커스텀 오버레이가 표시될 위치입니다
-                position={{
-                  lat: Number(item.lat),
-                  lng: Number(item.lng),
-                }}
-                yAnchor={0}
-              >
-                {/* 커스텀 오버레이에 표시할 내용입니다 */}
-                <div className={styles.infoWrapper}>
-                  <span className={styles.storeName}>{item.name}</span>
-                </div>
-              </CustomOverlayMap>
-              {isOpen[idx] && (
-                <CustomOverlayMap
+            level={defaultLevel} // 지도의 확대 레벨
+            zoomable={true}
+            ref={mapRef}
+            onCenterChanged={updateCenterWhenMapMoved}
+          >
+            {/* 현위치 마커 */}
+            <MapMarker
+              position={position} // 마커를 표시할 위치
+              image={{
+                src: "https://t1.daumcdn.net/localimg/localimages/07/2018/mw/m640/ico_marker.png",
+                size: { width: 30, height: 30 },
+              }}
+            />
+            {/* 모든 돈까스집 마커 */}
+            {data?.map((item: IKatsuInfo, idx) => (
+              <Fragment key={`${item.lat}-${item.lng}`}>
+                <EventMarkerContainer
+                  position={{
+                    lat: Number(item.lat),
+                    lng: Number(item.lng),
+                  }} // 마커를 표시할 위치
+                  index={idx}
+                />
+                <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+                  // 커스텀 오버레이가 표시될 위치입니다
                   position={{
                     lat: Number(item.lat),
                     lng: Number(item.lng),
                   }}
+                  yAnchor={0}
                 >
-                  <div className="wrap">
-                    <div className="info">
-                      <div className="title">
-                        카카오 스페이스닷원
-                        <div
-                          className="close"
-                          onClick={() => setIsOpen([false])}
-                          title="닫기"
-                        ></div>
-                      </div>
-                      <div className="body">
-                        <div className="img">
-                          <img
-                            src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005"
-                            width="73"
-                            height="70"
-                            alt="카카오 스페이스닷원"
-                          />
+                  {/* 커스텀 오버레이에 표시할 내용입니다 */}
+                  <div className={styles.infoWrapper}>
+                    <span className={styles.storeName}>{item.name}</span>
+                  </div>
+                </CustomOverlayMap>
+                {isOpen[idx] && (
+                  <CustomOverlayMap
+                    position={{
+                      lat: Number(item.lat),
+                      lng: Number(item.lng),
+                    }}
+                  >
+                    <div className="wrap">
+                      <div className="info">
+                        <div className="title">
+                          카카오 스페이스닷원
+                          <div
+                            className="close"
+                            onClick={() => setIsOpen([false])}
+                            title="닫기"
+                          ></div>
                         </div>
-                        <div className="desc">
-                          <div className="ellipsis">
-                            제주특별자치도 제주시 첨단로 242
+                        <div className="body">
+                          <div className="img">
+                            <img
+                              src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005"
+                              width="73"
+                              height="70"
+                              alt="카카오 스페이스닷원"
+                            />
                           </div>
-                          <div className="jibun ellipsis">
-                            (우) 63309 (지번) 영평동 2181
-                          </div>
-                          <div>
-                            <a
-                              href="https://www.kakaocorp.com/main"
-                              target="_blank"
-                              className="link"
-                              rel="noreferrer"
-                            >
-                              홈페이지
-                            </a>
+                          <div className="desc">
+                            <div className="ellipsis">
+                              제주특별자치도 제주시 첨단로 242
+                            </div>
+                            <div className="jibun ellipsis">
+                              (우) 63309 (지번) 영평동 2181
+                            </div>
+                            <div>
+                              <a
+                                href="https://www.kakaocorp.com/main"
+                                target="_blank"
+                                className="link"
+                                rel="noreferrer"
+                              >
+                                홈페이지
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  ;
-                </CustomOverlayMap>
-              )}
-            </Fragment>
-          ))}
-        </Map>
+                    ;
+                  </CustomOverlayMap>
+                )}
+              </Fragment>
+            ))}
+          </Map>
+          <div className={styles.iconWrapper}>
+            <button
+              className={styles.positionIcon}
+              onClick={setCenterToMyPosition}
+            >
+              <MdGpsFixed style={{ fontSize: 20, color: "black" }} />
+            </button>
+            <div>
+              <button
+                onClick={() => handleLevel("decrease")}
+                className={styles.decreaseBtn}
+              >
+                <MdAdd style={{ fontSize: 20, color: "black" }} />
+              </button>
+              <button
+                onClick={() => handleLevel("increase")}
+                className={styles.increaseBtn}
+              >
+                <MdHorizontalRule style={{ fontSize: 20, color: "black" }} />
+              </button>
+            </div>
+          </div>
+        </>
       )}
-      <div className={styles.iconWrapper}>
-        <button className={styles.positionIcon} onClick={setCenterToMyPosition}>
-          <MdGpsFixed style={{ fontSize: 20, color: "black" }} />
-        </button>
-        <div>
-          <button
-            onClick={() => handleLevel("decrease")}
-            className={styles.decreaseBtn}
-          >
-            <MdAdd style={{ fontSize: 20, color: "black" }} />
-          </button>
-          <button
-            onClick={() => handleLevel("increase")}
-            className={styles.increaseBtn}
-          >
-            <MdHorizontalRule style={{ fontSize: 20, color: "black" }} />
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
