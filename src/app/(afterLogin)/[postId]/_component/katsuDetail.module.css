@@ -1,0 +1,121 @@
+.detailContainer{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 50px;
+}
+.detailImg{
+    width: 500px;
+    height: 500px;
+}
+
+.detailTitle{
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.infoContainer{
+    display: flex;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-sizing: border-box;
+    padding: 40px 23px 36px 30px;
+    background-color: #f8f8f8;
+
+    @media (max-width: 700px) {
+        display:block;
+    }
+}
+
+.infoBlockLeft{
+    width: 50%;
+    border-right: 1px solid #ececec;
+    padding-right: 26px;
+    @media (max-width: 700px) {
+        width: 100%;
+        border-right: none;
+        padding-right: 0px;
+        padding-bottom: 26px;
+        border-bottom: 1px solid #ececec;;
+    }
+}
+
+.storeName{
+    margin: 0 0px 6px 0;
+    font-family: NotoSerif;
+    font-size: 26px;
+    font-weight: bold;
+    color: black;
+}
+
+.storeExplain{
+    padding-right: 50px;
+    margin: 22px 0px 49px 0;
+    font-family: NotoSansKR;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: #2e2e2e;
+}
+
+.infoBlockRight{
+    width: 50%;
+    padding-left: 26px;
+    @media (max-width: 700px) {
+        width: 100%;
+        padding-left: 0px;
+        padding-top: 26px;
+    }
+}
+
+.infoAdress{
+    font-family: NotoSansKR;
+    font-size: 15px;
+    font-weight: bold;
+    color: #272727;
+}
+
+.addressContent{
+    margin: 8px 0 26px;
+    font-family: NotoSansKR;
+    font-size: 16px;
+    color: #272727;
+}
+
+.flexContainer{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+}
+
+.category{
+    width: 160px;
+    height: 66px;
+    margin: 10px 4px 0 0;
+    padding: 11px 22px 10px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.02);
+    background-color: #fff;
+}
+
+.menuName{
+    margin-bottom: 6px;
+    text-align: center;
+    font-family: NotoSansKR;
+    font-size: 13px;
+    font-weight: 500;
+    color: #989898;
+}
+
+.menuPrice{
+    margin: 6px 0 0;
+    font-family: NotoSansKR;
+    font-size: 14px;
+    text-align: center;
+    color: #272727;
+}
