@@ -20,7 +20,9 @@ export default function AfterLoginLayout({ children }: Props) {
             </Link>
             <div>로그인</div>
             <div>마이페이지</div>
-            <div>언어선택</div>
+            <Link href={"/content/post"}>
+              <div>글쓰기</div>
+            </Link>
           </section>
         </header>
         <main className={style.main}>{children}</main>
