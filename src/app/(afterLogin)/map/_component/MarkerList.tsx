@@ -1,7 +1,15 @@
 "use client";
 
 import styles from "@/app/(afterLogin)/map/_component/markerlist.module.css";
-import { MdAdd, MdGpsFixed, MdHorizontalRule } from "react-icons/md";
+import {
+  MdAdd,
+  MdGpsFixed,
+  MdHorizontalRule,
+  MdRestaurantMenu,
+  MdAccessTime,
+  MdLocationPin,
+  MdArrowForwardIos,
+} from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
@@ -120,6 +128,7 @@ export default function MarkerList() {
               width: "100%",
               height: "500px",
               position: "relative",
+              zIndex: 1,
             }}
             level={defaultLevel} // 지도의 확대 레벨
             zoomable={true}
@@ -158,54 +167,66 @@ export default function MarkerList() {
                   </div>
                 </CustomOverlayMap>
                 {isOpen[idx] && (
-                  <CustomOverlayMap
-                    position={{
-                      lat: Number(item.lat),
-                      lng: Number(item.lng),
-                    }}
-                  >
-                    <div className="wrap">
-                      <div className="info">
-                        <div className="title">
-                          카카오 스페이스닷원
-                          <div
-                            className="close"
-                            onClick={() => setIsOpen([false])}
-                            title="닫기"
-                          ></div>
-                        </div>
-                        <div className="body">
-                          <div className="img">
-                            <img
-                              src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005"
-                              width="73"
-                              height="70"
-                              alt="카카오 스페이스닷원"
-                            />
-                          </div>
-                          <div className="desc">
-                            <div className="ellipsis">
-                              제주특별자치도 제주시 첨단로 242
+                  <div className={styles.infoContainer}>
+                    <div
+                      className={styles.infoCloseBtn}
+                      onClick={() => setIsOpen([false])}
+                      title="닫기"
+                    >
+                      <MdArrowForwardIos style={{ fontSize: 15 }} />
+                    </div>
+                    <img
+                      className={styles.infoImg}
+                      src={data[idx].image_url}
+                      alt={`${data[idx].name}`}
+                    />
+                    <div className={styles.infoTitle}>{data[idx].name}</div>
+                    <div className={styles.contentWrap}>
+                      <div className={styles.icon}>
+                        <MdRestaurantMenu />
+                      </div>
+                      <div className={styles.infoMenu}>
+                        {data[idx].menu
+                          .split("/")
+                          .map((menuInfo) => menuInfo.split(" "))
+                          .map((ele, idx) => (
+                            <div className={styles.category} key={idx}>
+                              <div className={styles.menuName}>{ele[0]}</div>
+                              <div className={styles.menuPrice}>{ele[1]}</div>
                             </div>
-                            <div className="jibun ellipsis">
-                              (우) 63309 (지번) 영평동 2181
-                            </div>
-                            <div>
-                              <a
-                                href="https://www.kakaocorp.com/main"
-                                target="_blank"
-                                className="link"
-                                rel="noreferrer"
-                              >
-                                홈페이지
-                              </a>
-                            </div>
-                          </div>
-                        </div>
+                          ))}
                       </div>
                     </div>
-                    ;
-                  </CustomOverlayMap>
+                    <div className={styles.contentWrap}>
+                      <div className={styles.icon}>
+                        <MdAccessTime />
+                      </div>
+                      <div className={styles.time}>
+                        {data[idx].time.split("/").map((info, idx) => (
+                          <div key={idx}>
+                            <div className={styles.addressContent}>{info}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className={styles.contentWrap}>
+                      <div className={styles.icon}>
+                        <MdLocationPin />
+                      </div>
+                      <div className="ellipsis">{data[idx].address}</div>
+                    </div>
+
+                    <div>
+                      <a
+                        href={`/${data[idx].post_id}`}
+                        target="_blank"
+                        className="link"
+                        rel="noreferrer"
+                      >
+                        상세정보
+                      </a>
+                    </div>
+                  </div>
                 )}
               </Fragment>
             ))}

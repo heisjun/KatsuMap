@@ -14,6 +14,9 @@
     font-weight: 600;
     padding: 10px 0px;
     height: 80px;
+    display: flex;
+    align-items: center;
+
 }
 
 .storeName{

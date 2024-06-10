@@ -70,3 +70,59 @@
     box-shadow: 0 0px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
     border-radius: 0px 0px 6px 6px;
 }
+
+.infoContainer {
+    position: absolute;
+    z-Index: 2;
+    top: 0px;
+    right: 0px;
+    background-color: white;
+    width: 350px;
+    height: 100%;
+}
+
+.infoImg{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.infoTitle{
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+.infoHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoCloseBtn {
+    position: absolute;
+    top:50%;
+    z-index: 10;
+    padding: 5px 1px 5px 1px;
+    background-color: white;
+    right: 100%;
+    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.category{
+    display:flex;
+}
+.contentWrap{
+    display: flex;
+    padding: 5px;
+  
+}
+.menuName{
+    padding-right: 10px;
+}
+
+.icon {
+    padding: 0px 5px 0px 5px;
+}
