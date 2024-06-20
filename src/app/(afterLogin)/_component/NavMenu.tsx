@@ -3,8 +3,12 @@
 import { useSelectedLayoutSegment } from "next/navigation";
 import style from "@/app/(afterLogin)/layout.module.css";
 import Link from "next/link";
+import { Session } from "next-auth";
 
-export default function NavMenu() {
+interface Props {
+  session: Session | null;
+}
+export default function NavMenu({ session }: Props) {
   const segment = useSelectedLayoutSegment();
   return (
     <>
@@ -29,7 +33,15 @@ export default function NavMenu() {
             </>
           )}
 
-          <div>로그인</div>
+          {session ? (
+            <div>로그아웃</div>
+          ) : (
+            <>
+              <Link href="/login">
+                <div>로그인</div>
+              </Link>
+            </>
+          )}
           <div>마이페이지</div>
           {segment === "content" ? (
             <>
