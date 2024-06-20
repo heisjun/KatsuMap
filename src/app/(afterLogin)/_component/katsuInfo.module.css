@@ -8,15 +8,26 @@
 .storeImage{
     width: 100%;
     height: auto;
+    z-index: 1;
 }
 .storeTitle{
     font-size: 24px;
     font-weight: 600;
-    padding: 10px 0px;
-    height: 80px;
+    height: 90px;
     display: flex;
     align-items: center;
+}
 
+.storeBookMark{
+    position: absolute;
+    width: 40px;
+    font-size: 35px;
+    z-index: 10;
+    bottom: 0px;
+    right: 0px;
+    color: white;
+    cursor: pointer;
+    padding: 0px 10px 5px 0px;
 }
 
 .storeName{
