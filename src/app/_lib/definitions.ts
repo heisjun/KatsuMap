@@ -15,3 +15,10 @@ export type KatsuInfo = {
   time: string;
   menu: string;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
