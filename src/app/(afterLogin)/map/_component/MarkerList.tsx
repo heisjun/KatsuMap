@@ -13,20 +13,23 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
-import KatsuInfo from "../../_component/KatsuInfo";
 import { CustomOverlayMap, MapMarker, useMap } from "react-kakao-maps-sdk";
 import { Map } from "react-kakao-maps-sdk";
 import useGeolocation from "../../_component/useGeolocation";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { debounce } from "lodash";
+import { useSession } from "next-auth/react";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
 interface LatLng {
   lat: number;
   lng: number;
 }
 export default function MarkerList() {
+  const session = useSession();
+  const user_email = session.data?.user?.email as string;
   const { data } = useQuery<IKatsuInfo[], Object, IKatsuInfo[]>({
-    queryKey: ["store", "info"],
+    queryKey: ["store", "info", user_email],
     queryFn: getStoreInfo,
   });
   const location = useGeolocation();
@@ -51,7 +54,6 @@ export default function MarkerList() {
   const updateCenterWhenMapMoved = useMemo(
     () =>
       debounce((map: kakao.maps.Map) => {
-        console.log(map.getCenter());
         setCenter({
           lat: map.getCenter().getLat(),
           lng: map.getCenter().getLng(),
@@ -216,15 +218,29 @@ export default function MarkerList() {
                       <div className="ellipsis">{data[idx].address}</div>
                     </div>
 
-                    <div>
-                      <a
-                        href={`/${data[idx].post_id}`}
-                        target="_blank"
-                        className="link"
-                        rel="noreferrer"
-                      >
-                        상세정보
-                      </a>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                      }}
+                    >
+                      <div>
+                        {item.is_scrap === 1 ? (
+                          <BsBookmarkFill />
+                        ) : (
+                          <BsBookmark />
+                        )}
+                      </div>
+                      <div>
+                        <a
+                          href={`/${data[idx].post_id}`}
+                          target="_blank"
+                          className="link"
+                          rel="noreferrer"
+                        >
+                          상세정보
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )}

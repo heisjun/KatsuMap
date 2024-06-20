@@ -79,6 +79,12 @@
     background-color: white;
     width: 350px;
     height: 100%;
+    
+}
+
+.infoCloseContainer{
+    right: -100%;
+    transition: 0.5s ease;
 }
 
 .infoImg{
