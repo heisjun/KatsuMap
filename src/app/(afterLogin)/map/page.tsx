@@ -5,11 +5,14 @@ import {
 } from "@tanstack/react-query";
 import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import MarkerList from "./_component/MarkerList";
+import { auth } from "@/auth";
 
 export default async function MainMap() {
+  const session = await auth();
+  const user_email = session?.user?.email as string;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["store", "info"],
+    queryKey: ["store", "info", user_email],
     queryFn: getStoreInfo,
   });
   const dehydratedState = dehydrate(queryClient);

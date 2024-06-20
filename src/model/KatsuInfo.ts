@@ -9,4 +9,6 @@ export interface IKatsuInfo {
   address: string;
   time: string;
   menu: string;
+  is_scrap: number;
+  scrap_id: string;
 }
