@@ -42,7 +42,22 @@ export default function NavMenu({ session }: Props) {
               </Link>
             </>
           )}
-          <div>마이페이지</div>
+          {session ? (
+            segment === "myfeed" ? (
+              <>
+                <Link href={`/myfeed/${session?.user?.email}`}>
+                  <div style={{ fontWeight: "bold" }}>마이페이지</div>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href={`/myfeed/${session?.user?.email}`}>
+                  <div>마이페이지</div>
+                </Link>
+              </>
+            )
+          ) : null}
+          {}
           {segment === "content" ? (
             <>
               <Link href={"/content/post"}>
