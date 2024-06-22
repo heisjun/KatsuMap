@@ -26,7 +26,7 @@ export default function KatsuInfo({ info }: Props) {
   const scrap = useMutation({
     mutationFn: async () => {
       return fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${postId}/scrap`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${postId}/scrap`,
         {
           method: "POST",
           credentials: "include",
@@ -75,7 +75,7 @@ export default function KatsuInfo({ info }: Props) {
   const unscrap = useMutation({
     mutationFn: async (unScrapId: string) => {
       return fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${postId}/scrap`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${postId}/scrap`,
         {
           method: "delete",
           credentials: "include",

@@ -7,7 +7,7 @@ export const getSingleKatsuInfo: QueryFunction<
 > = async ({ queryKey }) => {
   const [_1, postId] = queryKey;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/detail/${postId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${postId}/detail`,
     {
       next: {
         tags: ["store", postId],
