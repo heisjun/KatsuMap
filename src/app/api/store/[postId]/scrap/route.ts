@@ -29,17 +29,13 @@ export async function POST(request: {
   }
 }
 
-export async function deleteUser(unScrapId: string) {
-  await sql`
-      DELETE FROM scraps
-      WHERE scrap_id = ${unScrapId}
-    `;
-}
-
 export async function DELETE(request: {
   json: () => PromiseLike<{ unScrapId: string }> | { unScrapId: string };
 }) {
   const { unScrapId } = await request.json();
-  await deleteUser(unScrapId);
+  await sql`
+      DELETE FROM scraps
+      WHERE scrap_id = ${unScrapId}
+    `;
   return new Response(null, { status: 204 });
 }

@@ -1,5 +1,4 @@
 import styles from "./post.module.css";
-import LogoutBtn from "../../_component/LogoutBtn";
 import { auth } from "@/auth";
 
 export default async function WritePage() {
@@ -7,7 +6,6 @@ export default async function WritePage() {
   return (
     <div className={styles.postContainer}>
       <div className={styles.contentContainer}></div>
-      <LogoutBtn me={session} />
     </div>
   );
 }
