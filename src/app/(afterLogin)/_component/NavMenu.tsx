@@ -4,6 +4,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import style from "@/app/(afterLogin)/layout.module.css";
 import Link from "next/link";
 import { Session } from "next-auth";
+import MypageDropdown from "./MyPageDropDown";
 
 interface Props {
   session: Session | null;
@@ -22,52 +23,53 @@ export default function NavMenu({ session }: Props) {
           {segment === "map" ? (
             <>
               <Link href={"/map"}>
-                <div style={{ fontWeight: "bold" }}>돈카츠맵 소개</div>
+                <span style={{ fontWeight: "bold" }}>돈카츠맵 소개</span>
               </Link>
             </>
           ) : (
             <>
               <Link href={"/map"}>
-                <div>돈카츠맵 소개</div>
+                <span>돈카츠맵</span>
               </Link>
             </>
           )}
 
           {session ? (
-            <div>로그아웃</div>
-          ) : (
-            <>
-              <Link href="/login">
-                <div>로그인</div>
-              </Link>
-            </>
-          )}
-          {session ? (
             segment === "myfeed" ? (
               <>
                 <Link href={`/myfeed/${session?.user?.email}`}>
-                  <div style={{ fontWeight: "bold" }}>마이페이지</div>
+                  <span style={{ fontWeight: "bold" }}>마이페이지</span>
                 </Link>
               </>
             ) : (
               <>
                 <Link href={`/myfeed/${session?.user?.email}`}>
-                  <div>마이페이지</div>
+                  <span>마이페이지</span>
                 </Link>
               </>
             )
           ) : null}
-          {}
-          {segment === "content" ? (
+          {/* {segment === "content" ? (
             <>
               <Link href={"/content/post"}>
-                <div style={{ fontWeight: "bold" }}>글쓰기</div>
+                <span style={{ fontWeight: "bold" }}>글쓰기</span>
               </Link>
             </>
           ) : (
             <>
               <Link href={"/content/post"}>
-                <div>글쓰기</div>
+                <span>글쓰기</span>
+              </Link>
+            </>
+          )} */}
+          {session ? (
+            <>
+              <MypageDropdown user={session?.user?.email as string} />
+            </>
+          ) : (
+            <>
+              <Link href="/loginform">
+                <span>로그인</span>
               </Link>
             </>
           )}

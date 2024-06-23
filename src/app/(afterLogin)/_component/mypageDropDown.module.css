@@ -1,0 +1,54 @@
+.filtersBlock{
+    display: flex;
+    padding-left: 50px;
+}
+
+.dropDown {
+    user-select: none;
+    margin-right: 10px;
+    position: relative;
+}
+
+.dropDownBtn {
+    background: #fff;
+    border: 1px solid lightgrey;
+    height: 40px;
+    width: 40px;
+    color: gray;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+
+}
+
+.dropDownBtn:hover{
+    background-color: gray;
+    color: white;
+}
+
+.dropDownContent{
+    position: absolute;
+    top: 130%;
+    right: -200%;
+    background: #fff;
+    border: 1px solid lightgrey;
+    font-weight: 300;
+    color: #333;
+    width: 150px;
+    z-index: 10;
+    font-size: 15px;
+}
+
+.contentItem{
+font-weight: 400;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+}
+
+.contentItem:hover{
+    background: lightgray;
+}
