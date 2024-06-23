@@ -4,6 +4,7 @@ export interface IKatsuInfo {
   title: string;
   explain: string;
   image_url: string;
+  image_urls: string[];
   lat: string;
   lng: string;
   address: string;

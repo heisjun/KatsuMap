@@ -4,10 +4,10 @@ import React, { Key, useEffect, useRef, useState } from "react";
 import styles from "./imgSlider.module.css";
 
 interface Props {
-  data: { picUrl: string }[];
+  images: string[];
 }
 
-export default function ImgSlider({ data }: Props) {
+export default function ImgSlider({ images }: Props) {
   const slideRef = useRef(document.createElement("img"));
   const [slidePage, setSlidePage] = useState<number>(0);
   const [slideIdx, setSlideIdx] = useState<number>(0);
@@ -17,18 +17,18 @@ export default function ImgSlider({ data }: Props) {
       setSlidePage((prev: number) => prev - 510);
       setSlideIdx((prev: number) => prev - 1);
     } else {
-      setSlidePage((prev: number) => prev + 510 * (data.length - 1));
-      setSlideIdx((prev: number) => prev + 1 * (data.length - 1));
+      setSlidePage((prev: number) => prev + 510 * (images.length - 1));
+      setSlideIdx((prev: number) => prev + 1 * (images.length - 1));
     }
   };
 
   const rightButton = () => {
-    if (data.length - 1 > slideIdx) {
+    if (images.length - 1 > slideIdx) {
       setSlidePage((prev: number) => prev + 510);
       setSlideIdx((prev: number) => prev + 1);
     } else {
-      setSlidePage((prev: number) => prev - 510 * (data.length - 1));
-      setSlideIdx((prev: number) => prev - 1 * (data.length - 1));
+      setSlidePage((prev: number) => prev - 510 * (images.length - 1));
+      setSlideIdx((prev: number) => prev - 1 * (images.length - 1));
     }
   };
 
@@ -48,16 +48,16 @@ export default function ImgSlider({ data }: Props) {
         </div>
       </div>
       <div className={styles.bannerBox} ref={slideRef}>
-        {data.map((item, idx) => (
+        {images.map((image, idx) => (
           <div className={styles.mainBannerContainer} key={idx}>
             <div className={styles.imgContainer}>
-              <img src={item.picUrl} alt="" />
+              <img src={image} alt="" />
             </div>
           </div>
         ))}
       </div>
       <div className={styles.dotBox}>
-        {data.map((_, idx) => (
+        {images.map((_, idx) => (
           <div
             className={styles.dot}
             key={idx}

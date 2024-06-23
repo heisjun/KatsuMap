@@ -29,16 +29,11 @@ export default function KatsuDetail({ postId }: Props) {
   if (!store) {
     return null;
   }
-  const testData = [
-    { picUrl: store.image_url },
-    { picUrl: store.image_url },
-    { picUrl: store.image_url },
-  ];
 
   return (
     <div className={styles.detailContainer}>
       <div className={styles.detailTitle}>{store.title}</div>
-      <ImgSlider data={testData} />
+      <ImgSlider images={store.image_urls} />
       <div className={styles.infoContainer}>
         <div className={styles.infoBlockLeft}>
           <div className={styles.storeName}>{store.name}</div>
