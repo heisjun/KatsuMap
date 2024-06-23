@@ -124,7 +124,7 @@ export default function KatsuInfo({ info }: Props) {
   const onClickScrap: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
     if (session.data === null) {
-      router.push("/login");
+      router.push("/loginform");
     } else {
       if (info.is_scrap === 1) {
         unscrap.mutate(info.scrap_id);
