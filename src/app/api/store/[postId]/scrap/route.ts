@@ -25,9 +25,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: {
-  json: () => PromiseLike<{ unScrapId: string }> | { unScrapId: string };
-}) {
+export async function DELETE(request: NextRequest) {
   const { unScrapId } = await request.json();
   await sql`
       DELETE FROM scraps
