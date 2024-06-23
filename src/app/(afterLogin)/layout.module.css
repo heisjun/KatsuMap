@@ -21,8 +21,9 @@
 }
 .rigntSection{
     display: flex;
+    align-items: center;
 }
-.rigntSection div{
+.rigntSection span{
     padding-left: 50px;
     font-size: 18px;
 }
