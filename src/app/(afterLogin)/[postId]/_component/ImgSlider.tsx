@@ -1,6 +1,8 @@
 "use client";
 
 import React, { Key, useEffect, useRef, useState } from "react";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { RxSlash } from "react-icons/rx";
 import styles from "./imgSlider.module.css";
 
 interface Props {
@@ -40,18 +42,21 @@ export default function ImgSlider({ images }: Props) {
     <div style={{ position: "relative", overflow: "hidden" }}>
       <div className={styles.btnBox}>
         <div className={styles.arrowStyle} onClick={leftButton}>
-          <img src="/prev.png" />
+          <MdArrowBackIos />
         </div>
-        <img className={styles.slash} src="/slash.png" />
+        <div className={styles.slashStyle}>
+          <RxSlash />
+        </div>
+
         <div className={styles.arrowStyle} onClick={rightButton}>
-          <img src="/next.png" />
+          <MdArrowForwardIos />
         </div>
       </div>
       <div className={styles.bannerBox} ref={slideRef}>
         {images.map((image, idx) => (
           <div className={styles.mainBannerContainer} key={idx}>
             <div className={styles.imgContainer}>
-              <img src={image} alt="" />
+              <img src={image} alt="돈가스이미지" />
             </div>
           </div>
         ))}

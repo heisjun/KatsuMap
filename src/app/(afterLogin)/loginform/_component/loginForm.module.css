@@ -23,64 +23,83 @@
     flex-direction: column;
     height: 450px;
     z-index: 100;
+    @media (max-width: 700px) {
+        min-width: 400px
+    }
 }
 
 .modalHeader {
     padding: 36px 80px 20px;
     font-size: 31px;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
 }
 
 .modal form {
     display: flex;
     flex-direction: column;
-    flex: 1;
 }
 
 .modalBody {
-    flex: 1;
     padding: 0 80px;
-}
+    display: flex;
+    flex-direction: column;
 
+    align-items: center;
+}
+.logo {
+        width: 80px;
+}
 .inputDiv {
     display: flex;
     flex-direction: column;
-    height: 56px;
+    height: 42px;
+    width: 300px;
     position: relative;
-    margin: 12px 0;
 }
-.inputLabel {
+
+.inputId {
     width: 100%;
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    border: 1px solid rgb(207, 217, 222);
-    border-radius: 4px;
-    font-size: 13px;
-    height: 56px;
-    padding: 8px 8px 0;
-    color: rgb(83, 100, 113);
-}
-.inputLabel:focus-within {
-    color: red;
-}
-.input {
-    width: 100%;
+    background-color: white;
+    color: black;
     border: none;
     font-size: 17px;
-    margin-top: 16px;
     padding: 12px 8px 8px;
+    border-top: 1px solid rgb(207, 217, 222);
+    border-right: 1px solid rgb(207, 217, 222);
+    border-left: 1px solid rgb(207, 217, 222);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    outline: none;
+}
+
+.inputPw {
+    width: 100%;
+    background-color: white;
+    color: black;
+    border: none;
+    font-size: 17px;
+    padding: 12px 8px 8px;
+    border-top: 1px solid rgb(207, 217, 222);
+    border-bottom: 1px solid rgb(207, 217, 222);
+    border-right: 1px solid rgb(207, 217, 222);
+    border-left: 1px solid rgb(207, 217, 222);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
     outline: none;
 }
 
 .modalFooter {
-    padding: 24px 80px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
 }
 
 .actionButton {
-    width: 100%;
+    width: 300px;
     height: 50px;
-    border-radius: 25px;
+    border-radius: 5px;
     background-color: rgb(15, 20, 25);
     color: white;
     font-size: 17px;
@@ -117,4 +136,14 @@
     display: flex;
     justify-content: center;
     font-weight: bold;
+}
+
+.oAuthContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.oAuthContainer svg{
+    margin: 10px;
 }

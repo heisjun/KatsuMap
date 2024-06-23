@@ -13,9 +13,16 @@
 .storeTitle{
     font-size: 24px;
     font-weight: 600;
-    height: 90px;
+    height: 70px;
     display: flex;
-    align-items: center;
+    padding-top: 10px;
+    color: black;
+    @media (max-width: 700px) {
+        height: 50px;
+    }
+    @media (min-width: 1200px) {
+        height: 50px;
+    }
 }
 
 .storeBookMark{
@@ -32,7 +39,9 @@
 
 .storeName{
     font-size: 16px;
+    color: black;
 }
 .storeLocation{
     font-size: 16px;
+    color: black;
 }
