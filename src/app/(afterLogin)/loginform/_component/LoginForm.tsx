@@ -4,6 +4,7 @@ import style from "./loginForm.module.css";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Router from "next/router";
 
 export default function LoginForm() {
   const [id, setId] = useState("");
@@ -33,6 +34,10 @@ export default function LoginForm() {
   };
   const onClickClose = () => {
     router.back();
+  };
+
+  const goToRegister = () => {
+    window.location.href = "/register";
   };
 
   const onChangeId: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -91,6 +96,9 @@ export default function LoginForm() {
               로그인하기
             </button>
           </div>
+          <div className={style.signInBlock} onClick={goToRegister}>
+            <span>회원가입</span>
+          </div>
         </form>
         <div className={style.oAuthContainer}>
           <svg
@@ -98,6 +106,7 @@ export default function LoginForm() {
             height="48"
             viewBox="0 0 48 48"
             preserveAspectRatio="xMidYMid meet"
+            onClick={() => signIn("kakao", { callbackUrl: "/" })}
           >
             <g fill="none">
               <path

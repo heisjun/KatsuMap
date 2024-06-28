@@ -12,4 +12,5 @@ export interface IKatsuInfo {
   menu: string;
   is_scrap: number;
   scrap_id: string;
+  table_id: string | null;
 }

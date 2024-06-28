@@ -93,7 +93,7 @@
 .modalFooter {
     display: flex;
     justify-content: center;
-    padding: 20px 0px;
+    padding: 20px 0px 10px;
 }
 
 .actionButton {
@@ -137,7 +137,17 @@
     justify-content: center;
     font-weight: bold;
 }
+.signInBlock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.signInBlock span{
+    color:rgb(15, 20, 25);
+    font-size: 15px;
+    cursor: pointer;
+}
 .oAuthContainer{
     display: flex;
     justify-content: center;
@@ -146,4 +156,5 @@
 
 .oAuthContainer svg{
     margin: 10px;
+    cursor: pointer;
 }
