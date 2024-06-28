@@ -27,6 +27,7 @@
     "react-dom": "^18",
     "react-icons": "^5.2.1",
     "react-kakao-maps-sdk": "^1.1.27",
+    "swiper": "^11.1.4",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },
@@ -45,5 +46,8 @@
     "eslint-config-next": "14.2.3",
     "kakao.maps.d.ts": "^0.1.39",
     "typescript": "^5"
+  },
+  "overrides": {
+    "oauth4webapi": "npm:@jacobkim/oauth4webapi@^2.10.4"
   }
 }

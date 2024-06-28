@@ -124,6 +124,7 @@ export default function LoginForm() {
             height="48"
             viewBox="0 0 48 48"
             preserveAspectRatio="xMidYMid meet"
+            onClick={() => signIn("naver", { callbackUrl: "/" })}
           >
             <g fill="none">
               <path

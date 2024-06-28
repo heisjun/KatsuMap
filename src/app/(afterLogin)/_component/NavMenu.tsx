@@ -5,6 +5,7 @@ import style from "@/app/(afterLogin)/layout.module.css";
 import Link from "next/link";
 import { Session } from "next-auth";
 import MypageDropdown from "./MyPageDropDown";
+import { User } from "@/app/_lib/definitions";
 
 interface Props {
   session: Session | null;
@@ -64,7 +65,7 @@ export default function NavMenu({ session }: Props) {
           )} */}
           {session ? (
             <>
-              <MypageDropdown user={session?.user?.email as string} />
+              <MypageDropdown user={session.user as User} />
             </>
           ) : (
             <>
