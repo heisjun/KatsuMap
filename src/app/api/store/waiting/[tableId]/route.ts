@@ -12,7 +12,6 @@ export async function GET(
     );
     if (response.ok) {
       const res = await response.json();
-      console.log("API 응답 데이터:", res.data.tableStatus);
       return NextResponse.json(res.data.tableStatus);
     }
   } catch (error) {

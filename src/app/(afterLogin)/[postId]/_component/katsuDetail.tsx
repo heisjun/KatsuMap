@@ -7,7 +7,6 @@ import BasicMap from "../../_component/Map";
 import styles from "./katsuDetail.module.css";
 import ImgSlider from "./ImgSlider";
 import { SetStateAction, useEffect, useState } from "react";
-import SwiperTest from "./Swiper";
 
 interface Props {
   postId: string;

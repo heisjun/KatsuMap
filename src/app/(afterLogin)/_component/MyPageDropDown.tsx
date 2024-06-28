@@ -5,37 +5,23 @@ import styles from "./mypageDropDown.module.css";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
+import { User } from "@/app/_lib/definitions";
 
 interface Props {
-  user: string;
+  user: User;
 }
 export default function MypageDropdown({ user }: Props) {
-  interface Iprofile {
-    accountId: number;
-    nickName: string;
-    address: string;
-    homePage: null;
-    selfInfo: null;
-    profileUrl: string;
-  }
-
-  const [profile, setProfile] = useState<Iprofile>();
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const onLogout = () => {
     queryClient.removeQueries({
-      queryKey: ["store", "info", user],
+      queryKey: ["store", "info", user.email],
     });
     queryClient.removeQueries({
       queryKey: ["mypage"],
     });
     signOut({ redirect: false }).then(() => {
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
-        method: "post",
-        credentials: "include",
-      });
-
       router.replace("/");
       router.refresh();
     });
@@ -83,7 +69,7 @@ export default function MypageDropdown({ user }: Props) {
             <img
               className={styles.dropDownBtn}
               onClick={() => onOpenBtn(index)}
-              src={profile ? profile.profileUrl : "/Logo.png"}
+              src={user.image ? user.image : "/Logo.png"}
             />
             {isActive[index] && (
               <div className={styles.dropDownContent} ref={dropdownListRef}>
@@ -93,7 +79,7 @@ export default function MypageDropdown({ user }: Props) {
                     key={option.name}
                     onClick={() => {
                       option.url === "/myfeed"
-                        ? router.push(`/myfeed/${user}`)
+                        ? router.push(`/myfeed/${user.email}`)
                         : onLogout();
                     }}
                   >
