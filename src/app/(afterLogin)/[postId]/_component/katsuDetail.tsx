@@ -89,7 +89,7 @@ export default function KatsuDetail({ postId }: Props) {
           <div className={styles.detailTitle}>{store.title}</div>
         </div>
 
-        <span> {message ? message : <div>현재웨이팅{tableData}</div>}</span>
+        <span> {message ? message : <div>현재대기{tableData}</div>}</span>
 
         <ImgSlider images={store.image_urls} />
         <div className={styles.infoContainer}>
