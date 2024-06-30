@@ -1,0 +1,55 @@
+.indicatorContainer {
+    border-radius: 11px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #FF5000;
+    display: flex;
+    margin-bottom: 10px;
+    @media (max-width: 600px) {
+        height: 30px;
+    }
+    cursor: pointer;
+
+}
+
+.indicatorHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    font-size: 14px;
+    background-color: #FF5000;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    color: white;
+
+}
+
+.indicatorContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    color: #FF5000;
+    font-size: 14px;
+    flex: 1;
+}
+
+.indicatorContent span{
+   font-weight: bold;
+   font-size: 18px;
+}
+
+
+@keyframes rotate360 {
+
+}
+
+.refresh{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5px;
+    cursor: pointer;
+
+}

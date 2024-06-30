@@ -1,6 +1,7 @@
 export interface IKatsuInfo {
   post_id: string;
   name: string;
+  eng_name?: string;
   title: string;
   explain: string;
   image_url: string;

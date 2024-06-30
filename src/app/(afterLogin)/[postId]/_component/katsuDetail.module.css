@@ -10,6 +10,11 @@
 .detailHeader{
    display: flex;
    align-items: center;
+   justify-content: space-between;
+   @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: first baseline;
+}
 }
 .refreshBtn{
     margin-left: 20px;
@@ -23,19 +28,23 @@
 .detailTitle{
     font-size: 36px;
     font-weight: bold;
+    @media (max-width: 600px) {
+        font-size: 26px;
+    }
 }
 
 .infoContainer{
     display: flex;
     width: 100%;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     box-sizing: border-box;
-    padding: 40px 23px 36px 30px;
+    padding: 20px 23px 20px 23px;
     background-color: #f8f8f8;
-
     @media (max-width: 700px) {
         display:block;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 }
 
@@ -47,7 +56,7 @@
         width: 100%;
         border-right: none;
         padding-right: 0px;
-        padding-bottom: 26px;
+        padding-bottom: 0px;
         border-bottom: 1px solid #ececec;;
     }
 }
