@@ -24,7 +24,7 @@ export default function NavMenu({ session }: Props) {
           {segment === "map" ? (
             <>
               <Link href={"/map"}>
-                <span style={{ fontWeight: "bold" }}>돈카츠맵 소개</span>
+                <span style={{ fontWeight: "bold" }}>돈카츠맵</span>
               </Link>
             </>
           ) : (
