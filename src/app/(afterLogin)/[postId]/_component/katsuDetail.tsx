@@ -5,8 +5,8 @@ import { IKatsuInfo } from "@/model/KatsuInfo";
 import { getSingleKatsuInfo } from "../_lib/getSingleKatsuInfo";
 import BasicMap from "../../_component/Map";
 import styles from "./katsuDetail.module.css";
-import ImgSlider from "./ImgSlider";
 import { SetStateAction, useEffect, useState } from "react";
+import ImgSwiper from "./imgSwiper";
 
 interface Props {
   postId: string;
@@ -90,8 +90,7 @@ export default function KatsuDetail({ postId }: Props) {
         </div>
 
         <span> {message ? message : <div>현재대기{tableData}</div>}</span>
-
-        <ImgSlider images={store.image_urls} />
+        <ImgSwiper images={store.image_urls} />
         <div className={styles.infoContainer}>
           <div className={styles.infoBlockLeft}>
             <div className={styles.storeName}>{store.name}</div>
