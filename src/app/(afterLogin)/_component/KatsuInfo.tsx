@@ -141,9 +141,7 @@ export default function KatsuInfo({ info }: Props) {
           {info.is_scrap === 1 ? <BsBookmarkFill /> : <BsBookmark />}
         </div>
       </div>
-
       <div className={styles.storeTitle}>{info.title}</div>
-
       <div className={styles.storeName}>{info.name}</div>
       <div className={styles.storeLocation}>{info.address}</div>
     </KatsuArticle>
