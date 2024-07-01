@@ -1,15 +1,7 @@
 "use client";
 
 import styles from "@/app/(afterLogin)/map/_component/markerlist.module.css";
-import {
-  MdAdd,
-  MdGpsFixed,
-  MdHorizontalRule,
-  MdRestaurantMenu,
-  MdAccessTime,
-  MdLocationPin,
-  MdArrowForwardIos,
-} from "react-icons/md";
+import { MdAdd, MdGpsFixed, MdHorizontalRule } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
@@ -19,7 +11,7 @@ import useGeolocation from "../../_component/useGeolocation";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import SwipeModal from "./SwipeModal";
 
 interface LatLng {
   lat: number;
@@ -125,13 +117,7 @@ export default function MarkerList() {
         <>
           <Map // 지도를 표시할 Container
             center={center}
-            style={{
-              // 지도의 크기
-              width: "100%",
-              height: "500px",
-              position: "relative",
-              zIndex: 1,
-            }}
+            className={styles.map}
             level={defaultLevel} // 지도의 확대 레벨
             zoomable={true}
             ref={mapRef}
@@ -168,82 +154,7 @@ export default function MarkerList() {
                     <span className={styles.storeName}>{item.name}</span>
                   </div>
                 </CustomOverlayMap>
-                {isOpen[idx] && (
-                  <div className={styles.infoContainer}>
-                    <div
-                      className={styles.infoCloseBtn}
-                      onClick={() => setIsOpen([false])}
-                      title="닫기"
-                    >
-                      <MdArrowForwardIos style={{ fontSize: 15 }} />
-                    </div>
-                    <img
-                      className={styles.infoImg}
-                      src={data[idx].image_url}
-                      alt={`${data[idx].name}`}
-                    />
-                    <div className={styles.infoTitle}>{data[idx].name}</div>
-                    <div className={styles.contentWrap}>
-                      <div className={styles.icon}>
-                        <MdRestaurantMenu />
-                      </div>
-                      <div className={styles.infoMenu}>
-                        {data[idx].menu
-                          .split("/")
-                          .map((menuInfo) => menuInfo.split(" "))
-                          .map((ele, idx) => (
-                            <div className={styles.category} key={idx}>
-                              <div className={styles.menuName}>{ele[0]}</div>
-                              <div className={styles.menuPrice}>{ele[1]}</div>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                    <div className={styles.contentWrap}>
-                      <div className={styles.icon}>
-                        <MdAccessTime />
-                      </div>
-                      <div className={styles.time}>
-                        {data[idx].time.split("/").map((info, idx) => (
-                          <div key={idx}>
-                            <div className={styles.addressContent}>{info}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={styles.contentWrap}>
-                      <div className={styles.icon}>
-                        <MdLocationPin />
-                      </div>
-                      <div className="ellipsis">{data[idx].address}</div>
-                    </div>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                      }}
-                    >
-                      <div>
-                        {item.is_scrap === 1 ? (
-                          <BsBookmarkFill />
-                        ) : (
-                          <BsBookmark />
-                        )}
-                      </div>
-                      <div>
-                        <a
-                          href={`/${data[idx].post_id}`}
-                          target="_blank"
-                          className="link"
-                          rel="noreferrer"
-                        >
-                          상세정보
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {isOpen[idx] && <SwipeModal data={data} idx={idx} />}
               </Fragment>
             ))}
           </Map>
