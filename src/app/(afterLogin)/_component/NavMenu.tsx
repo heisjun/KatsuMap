@@ -38,13 +38,13 @@ export default function NavMenu({ session }: Props) {
           segment === "myfeed" ? (
             <>
               <Link href={`/myfeed/${session?.user?.email}`}>
-                <span style={{ fontWeight: "bold" }}>마이페이지</span>
+                <span style={{ fontWeight: "bold" }}>북마크</span>
               </Link>
             </>
           ) : (
             <>
               <Link href={`/myfeed/${session?.user?.email}`}>
-                <span>마이페이지</span>
+                <span>북마크</span>
               </Link>
             </>
           )

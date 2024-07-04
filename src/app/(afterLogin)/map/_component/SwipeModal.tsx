@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import styles from "./markerlist.module.css";
@@ -17,6 +17,7 @@ export default function SwipeModal({ data, idx }: Props) {
     x: 0,
     height: 500,
   }));
+  const [onTop, setOnTop] = useState<boolean>(false);
 
   const bindY = useDrag(
     ({ down, movement: [, my], direction: [, dy], cancel }) => {
@@ -24,15 +25,17 @@ export default function SwipeModal({ data, idx }: Props) {
       if (dy > 0 && my > 100 && !down) {
         // 모달을 화면 아래로 이동시켜 닫기
         set({ y: viewportHeight, height: viewportHeight - 96 });
+        setOnTop(false);
       } else if (dy < 0 && -my > 100 && !down) {
-        // 모달의 높이를 500px로 설정
         set({ y: 0, height: viewportHeight - 96 });
+        setOnTop(true);
       } else {
         // 드래그 중일 때, y값과 높이를 설정
         set({
           y: down ? my : 0,
           height: down ? height.get() : viewportHeight - 96,
         });
+        setOnTop(true);
       }
     },
     { axis: "y" }
@@ -45,6 +48,11 @@ export default function SwipeModal({ data, idx }: Props) {
     { axis: "x" }
   );
 
+  const onCloseModal = () => {
+    const viewportHeight = window.innerHeight;
+    set({ y: viewportHeight, height: viewportHeight - 96 });
+  };
+
   return (
     <animated.div
       className={styles.infoContainer}
@@ -55,7 +63,9 @@ export default function SwipeModal({ data, idx }: Props) {
       {...bindY()}
     >
       <div className={styles.scrollBlock}>
-        <div className={styles.scrollIndicator}></div>
+        {onTop && (
+          <div className={styles.scrollIndicator} onClick={onCloseModal}></div>
+        )}
       </div>
       <div className={styles.infoBlock}>
         <div className={styles.infoTitle}>
