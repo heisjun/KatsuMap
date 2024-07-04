@@ -54,41 +54,45 @@ export default function SwipeModal({ data, idx }: Props) {
       }}
       {...bindY()}
     >
-      <div className={styles.scrollIndicator}></div>
-      <div className={styles.infoTitle}>
-        <a href={`/${data[idx].post_id}`}>{data[idx].name}</a>
+      <div className={styles.scrollBlock}>
+        <div className={styles.scrollIndicator}></div>
       </div>
-      <div>{data[idx].address}</div>
-      <div className={styles.imgContainer}>
-        <ImgSwiper images={data[idx].image_urls} />
-      </div>
-      <div className={styles.textContainer}>
-        <div className={styles.contentWrap}>
-          <div className={styles.icon}>
-            <MdRestaurantMenu />
+      <div className={styles.infoBlock}>
+        <div className={styles.infoTitle}>
+          <a href={`/${data[idx].post_id}`}>{data[idx].name}</a>
+        </div>
+        <div>{data[idx].address}</div>
+        <div className={styles.imgContainer}>
+          <ImgSwiper images={data[idx].image_urls} />
+        </div>
+        <div className={styles.textContainer}>
+          <div className={styles.contentWrap}>
+            <div className={styles.icon}>
+              <MdRestaurantMenu />
+            </div>
+            <div className={styles.infoMenu}>
+              {data[idx].menu
+                .split("/")
+                .map((menuInfo) => menuInfo.split(" "))
+                .map((ele, idx) => (
+                  <div className={styles.category} key={idx}>
+                    <div className={styles.menuName}>{ele[0]}</div>
+                    <div className={styles.menuPrice}>{ele[1]}</div>
+                  </div>
+                ))}
+            </div>
           </div>
-          <div className={styles.infoMenu}>
-            {data[idx].menu
-              .split("/")
-              .map((menuInfo) => menuInfo.split(" "))
-              .map((ele, idx) => (
-                <div className={styles.category} key={idx}>
-                  <div className={styles.menuName}>{ele[0]}</div>
-                  <div className={styles.menuPrice}>{ele[1]}</div>
+          <div className={styles.contentWrap}>
+            <div className={styles.icon}>
+              <MdAccessTime />
+            </div>
+            <div className={styles.time}>
+              {data[idx].time.split("/").map((info, idx) => (
+                <div key={idx}>
+                  <div className={styles.addressContent}>{info}</div>
                 </div>
               ))}
-          </div>
-        </div>
-        <div className={styles.contentWrap}>
-          <div className={styles.icon}>
-            <MdAccessTime />
-          </div>
-          <div className={styles.time}>
-            {data[idx].time.split("/").map((info, idx) => (
-              <div key={idx}>
-                <div className={styles.addressContent}>{info}</div>
-              </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>

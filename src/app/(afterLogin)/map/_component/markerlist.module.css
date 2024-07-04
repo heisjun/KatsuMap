@@ -82,7 +82,6 @@
     background-color: white;
     width: 350px;
     height: 500px;
-    
     @media (max-width: 500px) {
         box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
         top:auto;
@@ -90,32 +89,46 @@
         width: 100%;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
-        padding: 20px ;
+        
+        
+    }
+    
+}
+
+
+
+.infoBlock{
+    @media (max-width: 500px) {
+        padding:0px 20px;
         overflow: scroll;
         overflow-x: hidden;
         -ms-overflow-style: none;
     }
-
-    
 }
 
-.infoContainer::-webkit-scrollbar{
+/* .infoBlock::-webkit-scrollbar{
     display:none;
-  }
-
+  } */
 
 
 @keyframes swipe-hint {
     0% { opacity: 1; transform: translateX(-50%) scaleX(1); }
     50% { opacity: 0.5; transform: translateX(-50%) scaleX(1.2); }
     100% { opacity: 1; transform: translateX(-50%) scaleX(1); }
+
 }
 
+.scrollBlock{
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    cursor: pointer;
+}
 .scrollIndicator{
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 50px;
     height: 5px;
     background-color: grey;
