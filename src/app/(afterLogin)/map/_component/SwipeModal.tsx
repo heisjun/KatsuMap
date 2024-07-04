@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import styles from "./markerlist.module.css";
@@ -12,28 +14,38 @@ interface Props {
 }
 
 export default function SwipeModal({ data, idx }: Props) {
-  const [{ y, x, height }, set] = useSpring(() => ({
-    y: 350,
-    x: 0,
-    height: 500,
-  }));
+  const [{ y, height }, setY] = useSpring(() => ({ y: 350, height: 500 }));
+  const [{ x }, setX] = useSpring(() => ({ x: 0 }));
   const [onTop, setOnTop] = useState<boolean>(false);
+
+  const [isWidthLessThan500, setIsWidthLessThan500] = useState(
+    window.innerWidth <= 500
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWidthLessThan500(window.innerWidth <= 500);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const bindY = useDrag(
     ({ down, movement: [, my], direction: [, dy], cancel }) => {
       const viewportHeight = window.innerHeight;
       if (dy > 0 && my > 100 && !down) {
         // 모달을 화면 아래로 이동시켜 닫기
-        set({ y: viewportHeight, height: viewportHeight - 96 });
+        setY({ y: viewportHeight, height: viewportHeight - 100 });
         setOnTop(false);
       } else if (dy < 0 && -my > 100 && !down) {
-        set({ y: 0, height: viewportHeight - 96 });
+        setY({ y: 0, height: viewportHeight - 100 });
         setOnTop(true);
       } else {
         // 드래그 중일 때, y값과 높이를 설정
-        set({
+        setY({
           y: down ? my : 0,
-          height: down ? height.get() : viewportHeight - 96,
+          height: down ? height.get() : viewportHeight - 100,
         });
         setOnTop(true);
       }
@@ -43,29 +55,31 @@ export default function SwipeModal({ data, idx }: Props) {
 
   const bindX = useDrag(
     ({ down, movement: [mx] }) => {
-      set({ x: down ? mx : mx > 100 ? 350 : 0 });
+      setX({ x: down ? mx : mx > 100 ? 350 : 0 });
     },
     { axis: "x" }
   );
 
   const onCloseModal = () => {
-    const viewportHeight = window.innerHeight;
-    set({ y: viewportHeight, height: viewportHeight - 96 });
+    if (onTop) {
+      const viewportHeight = window.innerHeight;
+      setY({ y: viewportHeight, height: viewportHeight - 100 });
+    }
   };
 
   return (
     <animated.div
       className={styles.infoContainer}
       style={{
-        transform: y.to((y) => `translate3d(0,${y}px,0)`),
+        transform: isWidthLessThan500
+          ? y.to((y) => `translate3d(0,${y}px,0)`)
+          : x.to((x) => `translate3d(${x}px,0,0)`),
         height: height,
       }}
-      {...bindY()}
+      {...(isWidthLessThan500 ? bindY() : bindX())}
     >
       <div className={styles.scrollBlock}>
-        {onTop && (
-          <div className={styles.scrollIndicator} onClick={onCloseModal}></div>
-        )}
+        <div className={styles.scrollIndicator} onClick={onCloseModal}></div>
       </div>
       <div className={styles.infoBlock}>
         <div className={styles.infoTitle}>
@@ -73,7 +87,7 @@ export default function SwipeModal({ data, idx }: Props) {
         </div>
         <div>{data[idx].address}</div>
         <div className={styles.imgContainer}>
-          <ImgSwiper images={data[idx].image_urls} />
+          <ImgSwiper images={data[idx].image_urls} singleImage={true} />
         </div>
         <div className={styles.textContainer}>
           <div className={styles.contentWrap}>

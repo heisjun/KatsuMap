@@ -39,6 +39,7 @@ export default function MarkerList() {
   const setCenterToMyPosition = () => {
     setCenter(position);
   };
+  const [selectedMarker, setSelectedMarker] = useState<number | null>(null);
 
   const [isOpen, setIsOpen] = useState([false]);
 
@@ -83,7 +84,7 @@ export default function MarkerList() {
     }
   };
 
-  const EventMarkerContainer = ({ position, index }: any) => {
+  const EventMarkerContainer = ({ position, index, name }: any) => {
     const map = useMap();
 
     function onOpenBtn(index: number) {
@@ -98,14 +99,38 @@ export default function MarkerList() {
       setIsOpen(newIsActive);
     }
 
+    const isSelected = selectedMarker === index;
+
     return (
-      <MapMarker
-        position={position} // 마커를 표시할 위치
-        onClick={(marker) => {
-          map.panTo(marker.getPosition());
-          isOpen[index] ? onCloseBtn(index) : onOpenBtn(index);
-        }}
-      ></MapMarker>
+      <>
+        <MapMarker
+          position={position} // 마커를 표시할 위치
+          onClick={(marker) => {
+            map.panTo(marker.getPosition());
+            isOpen[index] ? onCloseBtn(index) : onOpenBtn(index);
+            setSelectedMarker(index);
+          }}
+          image={{
+            src: isSelected
+              ? "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"
+              : "https://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png",
+            size: { width: 24, height: 35 },
+          }}
+        ></MapMarker>
+        <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+          // 커스텀 오버레이가 표시될 위치입니다
+          position={{
+            lat: Number(position.lat),
+            lng: Number(position.lng),
+          }}
+          yAnchor={0}
+        >
+          {/* 커스텀 오버레이에 표시할 내용입니다 */}
+          <div className={styles.infoWrapper}>
+            <span className={styles.storeName}>{name}</span>
+          </div>
+        </CustomOverlayMap>
+      </>
     );
   };
 
@@ -140,20 +165,8 @@ export default function MarkerList() {
                     lng: Number(item.lng),
                   }} // 마커를 표시할 위치
                   index={idx}
+                  name={item.name}
                 />
-                <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-                  // 커스텀 오버레이가 표시될 위치입니다
-                  position={{
-                    lat: Number(item.lat),
-                    lng: Number(item.lng),
-                  }}
-                  yAnchor={0}
-                >
-                  {/* 커스텀 오버레이에 표시할 내용입니다 */}
-                  <div className={styles.infoWrapper}>
-                    <span className={styles.storeName}>{item.name}</span>
-                  </div>
-                </CustomOverlayMap>
                 {isOpen[idx] && <SwipeModal data={data} idx={idx} />}
               </Fragment>
             ))}

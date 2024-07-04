@@ -80,16 +80,17 @@
     top: 0px;
     right: 0px;
     background-color: white;
-    width: 350px;
+    width: 400px;
     height: 500px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     @media (max-width: 500px) {
-        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
         top:auto;
         bottom: 0px;
         width: 100%;
-        border-top-left-radius: 20px;
+        border-bottom-left-radius: 0px;
         border-top-right-radius: 20px;
-        
         
     }
     
@@ -98,12 +99,14 @@
 
 
 .infoBlock{
+    padding:20px;
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
     @media (max-width: 500px) {
-        padding:0px 20px;
-        overflow: scroll;
-        overflow-x: hidden;
-        -ms-overflow-style: none;
+        padding:0px 20px;    
     }
+ 
 }
 
 /* .infoBlock::-webkit-scrollbar{
@@ -119,22 +122,37 @@
 }
 
 .scrollBlock{
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    cursor: pointer;
+    @media (max-width: 500px) {
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        cursor: pointer;    
+    }
 }
 .scrollIndicator{
+    position: relative;
     width: 50px;
     height: 5px;
     background-color: grey;
     border-radius: 2.5px;
-    
 }
+
+@media (min-width: 501px) {
+    .scrollIndicator {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      width: 5px;
+      height: 50px;
+      background-color: grey;
+      border-radius: 2.5px;
+      transform: translate(-50%, -50%);
+    }
+  }
 
 
 .infoCloseContainer{
