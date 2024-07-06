@@ -22,7 +22,7 @@ export default function ScrapList({ userId }: Props) {
   });
 
   return (
-    <main className={styles.mainWrapper}>
+    <main className={styles.listContainer}>
       {data?.map((item: IKatsuInfo, idx: any) => {
         return <KatsuInfo info={item} key={item.post_id} />;
       })}

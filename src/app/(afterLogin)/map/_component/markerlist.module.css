@@ -169,6 +169,7 @@
 }
 .textContainer{
     flex: 1; 
+    color: black;
 }
 
 .infoImg{
