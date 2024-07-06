@@ -17,11 +17,20 @@ interface LatLng {
   lat: number;
   lng: number;
 }
+
+type Props = {
+  searchParams: { order: string };
+};
 export default function MarkerList() {
   const session = useSession();
   const user_email = session.data?.user?.email as string;
-  const { data } = useQuery<IKatsuInfo[], Object, IKatsuInfo[]>({
-    queryKey: ["store", "info", user_email],
+  const { data } = useQuery<
+    IKatsuInfo[],
+    Object,
+    IKatsuInfo[],
+    [_1: string, _2: string, user_email: string, Props["searchParams"]]
+  >({
+    queryKey: ["store", "info", user_email, { order: "popular" }],
     queryFn: getStoreInfo,
   });
   const location = useGeolocation();

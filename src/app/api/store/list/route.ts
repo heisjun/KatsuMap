@@ -3,7 +3,7 @@ import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
 import { NextResponse } from "next/server";
 
-export async function GET(req: { url: string | URL }) {
+export async function GET(req: Request) {
   noStore();
   try {
     const { searchParams } = new URL(req.url);

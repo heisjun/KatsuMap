@@ -12,7 +12,7 @@ export default async function MainMap() {
   const user_email = session?.user?.email as string;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["store", "info", user_email],
+    queryKey: ["store", "info", user_email, { order: "popular" }],
     queryFn: getStoreInfo,
   });
   const dehydratedState = dehydrate(queryClient);
