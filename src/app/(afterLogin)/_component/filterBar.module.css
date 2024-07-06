@@ -1,0 +1,22 @@
+.filterbarContainer{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 10px 20px;
+    color: gray;
+}
+
+.filterbarContainer span{
+    cursor: pointer;
+}
+
+.selected{
+    font-weight: bold;
+    color: black;
+}
+.boundary{
+    width: 1px;
+    height: 18px;
+    background-color: gray;
+    margin: 0px 10px;
+}
