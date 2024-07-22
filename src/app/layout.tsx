@@ -26,6 +26,10 @@ export default function RootLayout({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAOJSKEY}&libraries=services&autoload=false`}
           strategy="beforeInteractive"
         />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
       </head>
       <body className={inter.className}>
         <AuthSession>{children}</AuthSession>
