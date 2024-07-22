@@ -2,9 +2,8 @@
 
 import style from "./loginForm.module.css";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import Router from "next/router";
 
 export default function LoginForm() {
   const [id, setId] = useState("");

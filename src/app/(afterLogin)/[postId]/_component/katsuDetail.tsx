@@ -5,7 +5,6 @@ import { IKatsuInfo } from "@/model/KatsuInfo";
 import { getSingleKatsuInfo } from "../_lib/getSingleKatsuInfo";
 import BasicMap from "../../_component/Map";
 import styles from "./katsuDetail.module.css";
-import { SetStateAction, useEffect, useState } from "react";
 import ImgSwiper from "./imgSwiper";
 import WaitingIndicator from "./WaitingIndicator";
 
@@ -59,7 +58,7 @@ export default function KatsuDetail({ postId }: Props) {
           <div className={styles.infoAdress}>메뉴</div>
           <div className={styles.flexContainer}>
             {store.menu
-              .split("/")
+              .split(",")
               .map((menuInfo) => menuInfo.split(" "))
               .map((ele, idx) => (
                 <div className={styles.category} key={idx}>
