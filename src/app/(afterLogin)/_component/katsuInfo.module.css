@@ -4,11 +4,16 @@
     padding-left: 16px;
     padding-right: 16px;
     margin-bottom: 32px;
+    width: 100%;
+    
 }
 .storeImage{
+    position: absolute;
     width: 100%;
-    height: auto;
+    height: 100%;
     z-index: 1;
+
+
 }
 .storeTitle{
     font-size: 24px;

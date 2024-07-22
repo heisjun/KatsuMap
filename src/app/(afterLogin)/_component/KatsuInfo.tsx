@@ -135,7 +135,14 @@ export default function KatsuInfo({ info }: Props) {
   };
   return (
     <KatsuArticle post={target}>
-      <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: 0,
+          paddingBottom: "100%",
+        }}
+      >
         <img src={info.image_url} className={styles.storeImage} />
         <div className={styles.storeBookMark} onClick={onClickScrap}>
           {info.is_scrap === 1 ? <BsBookmarkFill /> : <BsBookmark />}
