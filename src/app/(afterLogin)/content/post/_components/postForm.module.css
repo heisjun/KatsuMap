@@ -1,0 +1,108 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    height: 1000px;
+    width: 70%;
+
+}
+
+.contentContainer{
+    border: 1px solid black;
+    padding: 15px 30px 30px;
+    height: auto;
+    overflow: hidden;
+}
+
+.contentContainer span{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.titleBlock{
+    width: 100%;
+    height: 70px;
+    padding: 15px 0px;
+    border: none;
+    border-bottom: 1px solid gray;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.contentBlock{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    margin: 12px 0px;
+
+}
+
+.menuBlock{
+    width: 100%;
+    display: flex;
+    margin: 12px 0px;
+}
+
+.menuInput{
+    display: flex;
+    align-items: center;
+    height: 50px;
+
+}
+
+.menuInput input{
+    width: 135px;
+    height: 40px;
+    margin: 0px 20px 10px 0px;
+}
+
+.contentBlock input{
+    width: 220px;
+    height: 40px;
+}
+
+
+.contentLabel {
+    width: 130px;  
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.timeBlock{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    margin-bottom: 10px;
+
+}
+
+.timeLine{
+    margin: 0px 10px;
+}
+
+.timeBlock input{
+    width: 110px;
+    height: 40px;
+
+}
+
+.addBtn{
+    background-color: white;
+    color: black;
+    width: 290px;
+    height: 40px;
+    border: 1px solid black;
+}
+.textArea{
+    width: 100%;
+    height: 6.25em;
+    border: none;
+    resize: none;
+    outline: none;
+}
+
+.formContainer input{
+
+    outline: none;
+}
