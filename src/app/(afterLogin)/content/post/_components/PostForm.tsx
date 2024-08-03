@@ -8,7 +8,9 @@ import { Map } from "react-kakao-maps-sdk";
 import { ToggleBtn } from "./ToggleBtn";
 import UploadForm from "./UploadForm";
 import { useRouter } from "next/navigation";
-
+import { IoIosArrowDown } from "react-icons/io";
+import { TiDeleteOutline } from "react-icons/ti";
+import { FaPenSquare } from "react-icons/fa";
 type Post = {
   name: string;
   title: string;
@@ -86,7 +88,7 @@ const PostForm = () => {
     const convertMenu = getContent
       .map((ele) => ele.name.replace(/\s+/g, "") + " " + ele.price + "원")
       .join();
-
+    const currentTime = new Date().toISOString();
     try {
       const response = await fetch("/api/write", {
         method: "POST",
@@ -107,6 +109,7 @@ const PostForm = () => {
           time: `영업시간 : ${convertTime}/브레이크 타임 : ${breakTime}/휴무일 : ${offTime}`,
           menu: convertMenu,
           table_id: post.table_id,
+          createAt: currentTime,
         }),
       });
 
@@ -182,6 +185,8 @@ const PostForm = () => {
     setShowPostcode(false);
   };
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <>
       <form
@@ -191,147 +196,195 @@ const PostForm = () => {
         }}
       >
         <div className={styles.contentContainer}>
-          <span>기본정보 입력</span>
-          <div className={styles.contentBlock}>
-            <div className={styles.contentLabel}>가게이름</div>
-            <input
-              type="text"
-              name="name"
-              value={post.name}
-              onChange={handleChange}
-              placeholder="가게이름을 입력하세요"
-              required
-            />
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.contentLabel}>주소</div>
-            <input
-              onClick={() => setShowPostcode(true)}
-              type="text"
-              name="address"
-              value={address}
-              readOnly
-              onChange={handleChange}
-              required
-            />
-            <div>
-              {showPostcode && (
-                <DaumPostcode
-                  onComplete={handleComplete}
-                  autoClose={false}
-                  style={{
-                    position: "absolute",
-                    width: 500,
-                    top: "200px",
-                    zIndex: 1000,
-                  }}
-                />
-              )}
-              <Map
-                center={{ lat: markerPosition.lat, lng: markerPosition.lng }}
-                style={{ width: "100%", height: "400px", display: "none" }}
-                level={3}
-                onCreate={setMap}
-              ></Map>
+          <div
+            className={styles.contentHeader}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <FaPenSquare
+                style={{ color: "#F8C332", fontSize: 30, marginRight: 10 }}
+              />
+              <div>기본 정보 입력</div>
+            </div>
+
+            <div className={isOpen ? styles.rotate : styles.default}>
+              <IoIosArrowDown />
             </div>
           </div>
-          <div className={styles.timeBlock}>
-            <div className={styles.contentLabel}>영업시간</div>
-            <input
-              type="time"
-              name="timeStr"
-              value={post.timeStr}
-              onChange={handleChange}
-              required
-            />
-            <div className={styles.timeLine}>-</div>
-            <input
-              type="time"
-              name="timeEnd"
-              value={post.timeEnd}
-              onChange={handleChange}
-              required
-            />
-          </div>
 
-          <div className={styles.timeBlock}>
-            <div className={styles.contentLabel}>브레이크타임</div>
-            <ToggleBtn isOn={viewBreak} setisOn={setViewBreak} />
-            {viewBreak && (
-              <>
-                <input
-                  type="time"
-                  name="breakStr"
-                  value={post.breakStr}
-                  onChange={handleChange}
-                  required
-                />
-                <div className={styles.timeLine}>-</div>
-                <input
-                  type="time"
-                  name="breakEnd"
-                  value={post.breakEnd}
-                  onChange={handleChange}
-                  required
-                />
-              </>
-            )}
-          </div>
-          <div className={styles.contentBlock}>
-            <div className={styles.contentLabel}>휴무일</div>
-            <ToggleBtn isOn={viewOff} setisOn={setViewOff} />
-            {viewOff && (
-              <select onChange={handleSelect} value={selected}>
-                <option value="월요일">월요일</option>
-                <option value="화요일">화요일</option>
-                <option value="수요일">수요일</option>
-                <option value="목요일">목요일</option>
-                <option value="금요일">금요일</option>
-                <option value="토요일">토요일</option>
-                <option value="일요일">일요일</option>
-              </select>
-            )}
-          </div>
-          <div className={styles.menuBlock}>
-            <div className={styles.contentLabel}>메뉴</div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {getContent &&
-                getContent.map((item, i: number) => {
-                  return (
-                    <div key={i} className={styles.menuInput}>
-                      <input
-                        type="text"
-                        name="menu"
-                        value={item.name}
-                        placeholder="메뉴"
-                        onChange={(e) => handleMenu(i, "name", e.target.value)}
-                        required
-                      />
-                      <input
-                        type="text"
-                        name="menu"
-                        value={item.price}
-                        placeholder="가격"
-                        onChange={(e) => handleMenu(i, "price", e.target.value)}
-                        required
-                      />
-                      {getContent.length !== 1 && (
-                        <div onClick={() => onRemoveWritingItem(i)}>삭제</div>
-                      )}
-                    </div>
-                  );
-                })}
-              <button
-                className={styles.addBtn}
-                type="button"
-                onClick={onAddWritingItem}
-              >
-                추가하기
-              </button>
+          <div
+            className={`${styles.contentModal} ${
+              isOpen ? styles.contentModalOpen : ""
+            }`}
+          >
+            <div className={styles.contentBlock}>
+              <div className={styles.contentLabel}>가게이름</div>
+              <input
+                type="text"
+                name="name"
+                value={post.name}
+                onChange={handleChange}
+                placeholder="가게이름을 입력하세요"
+                required
+              />
+            </div>
+            <div className={styles.contentBlock}>
+              <div className={styles.contentLabel}>주소</div>
+              <input
+                onClick={() => setShowPostcode(true)}
+                type="text"
+                name="address"
+                value={address}
+                readOnly
+                onChange={handleChange}
+                required
+              />
+              <div>
+                {showPostcode && (
+                  <DaumPostcode
+                    onComplete={handleComplete}
+                    autoClose={false}
+                    style={{
+                      position: "absolute",
+                      width: 400,
+                      top: "200px",
+                      zIndex: 1000,
+                    }}
+                  />
+                )}
+                <Map
+                  center={{
+                    lat: markerPosition.lat,
+                    lng: markerPosition.lng,
+                  }}
+                  style={{ width: "100%", height: "400px", display: "none" }}
+                  level={3}
+                  onCreate={setMap}
+                ></Map>
+              </div>
+            </div>
+            <div className={styles.timeBlock}>
+              <div className={styles.contentLabel}>영업시간</div>
+              <input
+                type="time"
+                step="900"
+                name="timeStr"
+                value={post.timeStr}
+                onChange={handleChange}
+                required
+              />
+              <div className={styles.timeLine}>-</div>
+              <input
+                type="time"
+                name="timeEnd"
+                value={post.timeEnd}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className={styles.timeBlock}>
+              <div className={styles.contentLabel}>브레이크타임</div>
+              <ToggleBtn isOn={viewBreak} setisOn={setViewBreak} />
+              {viewBreak && (
+                <>
+                  <input
+                    type="time"
+                    name="breakStr"
+                    value={post.breakStr}
+                    onChange={handleChange}
+                    required
+                  />
+                  <div className={styles.timeLine}>-</div>
+                  <input
+                    type="time"
+                    name="breakEnd"
+                    value={post.breakEnd}
+                    onChange={handleChange}
+                    required
+                  />
+                </>
+              )}
+            </div>
+            <div className={styles.contentBlock}>
+              <div className={styles.contentLabel}>휴무일</div>
+              <ToggleBtn isOn={viewOff} setisOn={setViewOff} />
+              {viewOff && (
+                <select
+                  onChange={handleSelect}
+                  value={selected}
+                  className={styles.selectContent}
+                >
+                  <option value="월요일">월요일</option>
+                  <option value="화요일">화요일</option>
+                  <option value="수요일">수요일</option>
+                  <option value="목요일">목요일</option>
+                  <option value="금요일">금요일</option>
+                  <option value="토요일">토요일</option>
+                  <option value="일요일">일요일</option>
+                </select>
+              )}
+            </div>
+            <div className={styles.menuBlock}>
+              <div className={styles.contentLabel}>메뉴</div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {getContent &&
+                  getContent.map((item, i: number) => {
+                    return (
+                      <div key={i} className={styles.menuInput}>
+                        <div>
+                          <input
+                            type="text"
+                            name="menu"
+                            value={item.name}
+                            placeholder="메뉴"
+                            onChange={(e) =>
+                              handleMenu(i, "name", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+                        <div style={{ position: "relative" }}>
+                          <input
+                            type="text"
+                            name="menu"
+                            value={item.price}
+                            placeholder="가격"
+                            onChange={(e) =>
+                              handleMenu(i, "price", e.target.value)
+                            }
+                            required
+                          />
+                          <span
+                            style={{ position: "absolute", right: 20, top: 10 }}
+                          >
+                            원
+                          </span>
+                        </div>
+
+                        {getContent.length !== 1 && (
+                          <div onClick={() => onRemoveWritingItem(i)}>
+                            <TiDeleteOutline className={styles.deleteBtn} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                <button
+                  className={styles.addBtn}
+                  type="button"
+                  onClick={onAddWritingItem}
+                >
+                  추가하기
+                </button>
+              </div>
             </div>
           </div>
         </div>
-
+        <UploadForm
+          ref={uploadFormRef}
+          onUploadComplete={handleUploadComplete}
+        />
         <input
           className={styles.titleBlock}
           type="text"
@@ -351,12 +404,11 @@ const PostForm = () => {
           required
         />
 
-        <button type="submit" disabled={uploading}>
-          Submit
+        <button type="submit" disabled={uploading} className={styles.submitBtn}>
+          글쓰기
         </button>
         {uploading && <div>업로드 중...</div>}
       </form>
-      <UploadForm ref={uploadFormRef} onUploadComplete={handleUploadComplete} />
     </>
   );
 };

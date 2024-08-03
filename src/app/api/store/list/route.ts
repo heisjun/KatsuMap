@@ -35,24 +35,13 @@ export async function GET(req: Request) {
     } else {
       const data = await sql<KatsuInfo>`SELECT 
     s.post_id, s.name, s.title, s.explain, s.image_url, s.lat, s.lng, s.address, s.time, s.menu,
-    us.scrap_id, s.image_urls, s.table_id,
-    CASE WHEN us.scrap_id IS NOT NULL THEN 1 ELSE 0 END AS is_scrap,
-    COALESCE(scrap_count.scrap_count, 0) AS scrap_count
+    us.scrap_id, s.createat,
+    CASE WHEN us.scrap_id IS NOT NULL THEN 1 ELSE 0 END AS is_scrap
     FROM 
         katsu_info s
     LEFT JOIN 
         scraps us ON s.post_id = us.post_id AND us.user_email = ${userEmail}
-    LEFT JOIN 
-        (
-            SELECT 
-                post_id, 
-                COUNT(scrap_id) AS scrap_count
-            FROM 
-                scraps
-            GROUP BY 
-                post_id
-        ) scrap_count ON s.post_id = scrap_count.post_id
-    ORDER BY post_id DESC`;
+    ORDER BY createat DESC`;
       return NextResponse.json(data.rows);
     }
   } catch (error) {

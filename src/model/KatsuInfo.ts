@@ -1,7 +1,7 @@
 export interface IKatsuInfo {
   post_id: string;
   name: string;
-  eng_name?: string;
+  eng_name: string | null;
   title: string;
   explain: string;
   image_url: string;
@@ -14,4 +14,5 @@ export interface IKatsuInfo {
   is_scrap: number;
   scrap_id: string;
   table_id: string | null;
+  createAt: Date;
 }
