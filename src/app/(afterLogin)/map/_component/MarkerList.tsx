@@ -12,6 +12,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
 import SwipeModal from "./SwipeModal";
+import LoadingSpinner from "../../_component/LoadingSpinner";
 
 interface LatLng {
   lat: number;
@@ -146,7 +147,16 @@ export default function MarkerList() {
   return (
     <div className={styles.mainWrapper}>
       {!location.loaded ? (
-        <div>로딩중</div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: 500,
+          }}
+        >
+          <LoadingSpinner />
+        </div>
       ) : (
         <>
           <Map // 지도를 표시할 Container
