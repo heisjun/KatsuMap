@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
+import { NextResponse } from "next/server";
 
 export const authConfig = {
   pages: {
@@ -16,17 +17,17 @@ export const authConfig = {
 
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/content/post");
+      const isOnDashboard =
+        nextUrl.pathname.startsWith("/content/post") ||
+        nextUrl.pathname.startsWith("/myfeed");
 
-      //console.log("nextUrl", nextUrl)
-      //console.log("isLoggedIn", isLoggedIn)
-      //console.log("isOnDashboard", isOnDashboard)
-
-      //post로 시작한다면
+      //인가가 필요한 경로이동
       if (isOnDashboard) {
         //+ 로그인을 했다면
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
+        return NextResponse.redirect(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/loginform`
+        ); // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
         console.log("로그인 완료했다.");
       }
