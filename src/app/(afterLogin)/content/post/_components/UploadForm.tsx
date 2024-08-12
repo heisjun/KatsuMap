@@ -1,6 +1,14 @@
-// uploadForm.module.css
+"use client";
 import Image from "next/image";
-import { ChangeEvent, forwardRef, useImperativeHandle, useState } from "react";
+import {
+  ChangeEvent,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import { FaFileImage } from "react-icons/fa6";
+import { TiDelete } from "react-icons/ti";
 import styles from "./uploadform.module.css";
 
 type UploadFormProps = {
@@ -8,7 +16,7 @@ type UploadFormProps = {
 };
 
 const UploadForm = forwardRef(({ onUploadComplete }: UploadFormProps, ref) => {
-  const [previewImgs, setPreviewImgs] = useState<FileList>();
+  const [previewImgs, setPreviewImgs] = useState<FileList | null>();
 
   // 이미지 저장
   const saveHandler = async () => {
@@ -36,41 +44,78 @@ const UploadForm = forwardRef(({ onUploadComplete }: UploadFormProps, ref) => {
 
   // 이미지 미리보기
   const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+    const newFiles = e.target.files;
 
-    if (files && files.length > 0) {
-      setPreviewImgs(files);
+    if (newFiles && newFiles.length > 0) {
+      if (previewImgs) {
+        // 기존 FileList와 새 FileList를 File[]로 변환하여 병합
+        const combinedFiles = Array.from(previewImgs).concat(
+          Array.from(newFiles)
+        );
+        // File[]에서 다시 FileList 생성
+        const dataTransfer = new DataTransfer();
+        combinedFiles.forEach((file) => dataTransfer.items.add(file));
+
+        setPreviewImgs(dataTransfer.files);
+      } else {
+        setPreviewImgs(newFiles);
+      }
     }
+  };
+
+  const removeImage = (index: number) => {
+    if (!previewImgs) return;
+
+    const dataTransfer = new DataTransfer();
+    Array.from(previewImgs).forEach((file, i) => {
+      if (i !== index) dataTransfer.items.add(file);
+    });
+
+    setPreviewImgs(dataTransfer.files);
   };
 
   useImperativeHandle(ref, () => ({
     saveHandler,
   }));
 
-  return (
-    <main>
-      <div className={styles.container}>
-        <form className={styles.form}>
-          {/* 파일 업로드  */}
-          <input type="file" multiple onChange={(e) => fileHandler(e)} />
+  const imgRef = useRef<any>(null);
+  const onClickFileBtn = (e: any) => {
+    imgRef.current.click();
+  };
 
-          {/* 이미지 미리보기  */}
-          {previewImgs && (
-            <div className={styles.previewContainer}>
-              {Array.from(previewImgs).map((file, index) => (
-                <Image
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt="이미지 미리보기"
-                  width={100}
-                  height={100}
-                />
-              ))}
+  return (
+    <div className={styles.container}>
+      {previewImgs && (
+        <div className={styles.previewContainer}>
+          {Array.from(previewImgs).map((file, index) => (
+            <div key={index} className={styles.imageBlock}>
+              <Image
+                src={URL.createObjectURL(file)}
+                alt="이미지 미리보기"
+                width={150}
+                height={150}
+                className={styles.image}
+              />
+              <TiDelete
+                className={styles.removeBtn}
+                onClick={() => removeImage(index)}
+              />
             </div>
-          )}
-        </form>
+          ))}
+        </div>
+      )}
+      <div className={styles.form} onClick={onClickFileBtn}>
+        <FaFileImage className={styles.uploadIcon} />
+        <span>Image Upload</span>
+        <input
+          type="file"
+          multiple
+          onChange={(e) => fileHandler(e)}
+          ref={imgRef}
+          style={{ display: "none" }}
+        />
       </div>
-    </main>
+    </div>
   );
 });
 
