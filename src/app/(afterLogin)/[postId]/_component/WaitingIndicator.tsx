@@ -4,7 +4,7 @@ import { MdOutlineRefresh } from "react-icons/md";
 import styles from "./waitingIndicator.module.css";
 interface Props {
   tableId: string | null;
-  engName?: string;
+  engName: string | null;
 }
 export default function WaitingIndicator({ tableId, engName }: Props) {
   const [tableData, setTableData] = useState();
