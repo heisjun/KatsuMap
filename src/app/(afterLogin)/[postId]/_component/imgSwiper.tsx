@@ -22,7 +22,14 @@ export default function ImgSwiper({ images, singleImage }: Props) {
       >
         {images.map((image, idx) => (
           <SwiperSlide key={idx}>
-            <div>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                height: 0,
+                paddingBottom: "100%",
+              }}
+            >
               <img
                 src={image}
                 className={styles.swiperImg}
