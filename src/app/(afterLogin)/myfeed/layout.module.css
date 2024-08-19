@@ -1,0 +1,51 @@
+.container {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.mypageHeader{
+    display: flex;
+    justify-content: center;
+}
+
+.title{
+    font-size: 32px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.navMenu{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0px 16px 20px 16px;
+}
+
+
+
+
+.link{
+    width: 100%;
+    border-bottom: 2px solid #E4E7EB;
+    display: flex;
+    justify-content: center;
+}
+
+.link span{
+    font-size: 18px;
+    padding: 16px;
+}
+
+.onLink{
+    width: 100%;
+    border-bottom: 2px solid #D4A373;
+    display: flex;
+    justify-content: center;
+}
+
+.onLink span{
+    color: #D4A373;
+    font-size: 18px;
+    padding: 16px;
+}
