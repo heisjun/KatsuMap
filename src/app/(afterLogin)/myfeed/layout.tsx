@@ -5,7 +5,7 @@ import style from "./layout.module.css";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-type Props = { children: ReactNode; modal: ReactNode };
+type Props = { children: ReactNode };
 export default function MypageLayout({ children }: Props) {
   const segment = useSelectedLayoutSegment();
 
