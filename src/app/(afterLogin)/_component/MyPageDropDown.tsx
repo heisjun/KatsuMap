@@ -79,7 +79,7 @@ export default function MypageDropdown({ user }: Props) {
                     key={option.name}
                     onClick={() => {
                       option.url === "/myfeed"
-                        ? router.push(`/myfeed/${user.email}`)
+                        ? router.push(`/myfeed`)
                         : onLogout();
                     }}
                   >
