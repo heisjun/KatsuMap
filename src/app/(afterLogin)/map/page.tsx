@@ -6,6 +6,12 @@ import {
 import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import MarkerList from "./_component/MarkerList";
 import { auth } from "@/auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "돈가스여지도",
+  description: "돈가스여지도",
+};
 
 export default async function MainMap() {
   const session = await auth();
