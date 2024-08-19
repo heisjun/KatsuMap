@@ -6,17 +6,25 @@ import cx from "classnames";
 const FilterComponent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-
+  const pathname = usePathname();
   const search = searchParams.get("order");
   const onChangePopular = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("order", "popular");
-    router.replace(`/?${newSearchParams.toString()}`);
+    if (pathname === "/search") {
+      router.replace(`/search?${newSearchParams.toString()}`);
+    } else {
+      router.replace(`/?${newSearchParams.toString()}`);
+    }
   };
   const onChangeRecent = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.delete("order");
-    router.replace(`/?${newSearchParams.toString()}`);
+    if (pathname === "/search") {
+      router.replace(`/search?${newSearchParams.toString()}`);
+    } else {
+      router.replace(`/?${newSearchParams.toString()}`);
+    }
   };
 
   return (
