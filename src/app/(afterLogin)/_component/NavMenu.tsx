@@ -24,7 +24,8 @@ export default function NavMenu({ session }: Props) {
   };
   const router = useRouter();
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     if (isFocused && searchValue) {
       router.push(`/search?query=${encodeURIComponent(searchValue)}`);
     } else {
@@ -70,7 +71,11 @@ export default function NavMenu({ session }: Props) {
       </section>
       <section className={style.rigntSection}>
         <div className={style.searchBox}>
-          <button className={style.btnSearch} onClick={handleButtonClick}>
+          <button
+            className={style.btnSearch}
+            onClick={handleButtonClick}
+            onTouchStart={handleButtonClick}
+          >
             <IoSearchOutline className={style.searchIcon} />
           </button>
           <input
@@ -84,11 +89,14 @@ export default function NavMenu({ session }: Props) {
           />
         </div>
         <div style={{ paddingLeft: 20 }} className={style.burgur}>
-          <RxHamburgerMenu style={{ fontSize: 30 }} onClick={toggleSide} />
+          <RxHamburgerMenu
+            style={{ fontSize: 30, color: "black" }}
+            onClick={toggleSide}
+          />
         </div>
         <SideBar
           isOpen={isOpen}
-          user={session?.user as User}
+          user={session?.user as User | null}
           setIsOpen={setIsOpen}
         />
         {isOpen && (
@@ -109,19 +117,26 @@ export default function NavMenu({ session }: Props) {
             </>
           )}
 
-          {segment === "content" ? (
+          {session ? (
             <>
-              <Link href={"/content/post"}>
-                <span style={{ fontWeight: "bold" }}>글쓰기</span>
-              </Link>
+              {segment === "content" ? (
+                <>
+                  <Link href={"/content/post"}>
+                    <span style={{ fontWeight: "bold" }}>글쓰기</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href={"/content/post"}>
+                    <span>글쓰기</span>
+                  </Link>
+                </>
+              )}
             </>
           ) : (
-            <>
-              <Link href={"/content/post"}>
-                <span>글쓰기</span>
-              </Link>
-            </>
+            <></>
           )}
+
           {session ? (
             <>
               <MypageDropdown user={session.user as User} />
