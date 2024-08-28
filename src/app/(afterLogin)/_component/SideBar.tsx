@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 interface ISideBar {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
-  user: User;
+  user: User | null;
 }
 export default function SideBar(props: ISideBar) {
   const { isOpen, setIsOpen, user } = props;
@@ -20,19 +20,27 @@ export default function SideBar(props: ISideBar) {
   return (
     <div className={cx(styles.sideBarWarp, isOpen && styles.open)}>
       <div className={styles.sideHeader}>
-        <div className={styles.profileBlock}>
-          <img
-            className={styles.profile}
-            src={user.image ? user.image : "/avatar.png"}
-          />
-          <div>{user.name}</div>
-        </div>
+        {user ? (
+          <div className={styles.profileBlock}>
+            <img
+              className={styles.profile}
+              src={user.image ? user.image : "/avatar.png"}
+            />
+            <div>{user.name}</div>
+          </div>
+        ) : (
+          <div className={styles.loginHeader}>
+            <div>로그인</div>
+            <pre className={styles.blank} />
+            <div>회원가입</div>
+          </div>
+        )}
 
-        <RxCross1
+        {/* <RxCross1
           onClick={toggleSide}
           onKeyDown={toggleSide}
           style={{ fontSize: 20, color: "black" }}
-        />
+        /> */}
       </div>
       <ul className={styles.ulMenu}>
         {pathname === "/map" ? (
@@ -44,26 +52,29 @@ export default function SideBar(props: ISideBar) {
             <li>돈카츠맵</li>
           </Link>
         )}
-        {pathname === "/content/post" ? (
-          <Link href={"/content/post"} onClick={toggleSide}>
-            <li className={styles.strongLi}>글쓰기</li>
-          </Link>
-        ) : (
-          <Link href={"/content/post"} onClick={toggleSide}>
-            <li>글쓰기</li>
-          </Link>
+        {user && (
+          <>
+            {pathname === "/content/post" ? (
+              <Link href={"/content/post"} onClick={toggleSide}>
+                <li className={styles.strongLi}>글쓰기</li>
+              </Link>
+            ) : (
+              <Link href={"/content/post"} onClick={toggleSide}>
+                <li>글쓰기</li>
+              </Link>
+            )}
+            {pathname.startsWith("/myfeed") ? (
+              <Link href={"/myfeed"} onClick={toggleSide}>
+                <li className={styles.strongLi}>마이페이지</li>
+              </Link>
+            ) : (
+              <Link href={"/myfeed"} onClick={toggleSide}>
+                <li>마이페이지</li>
+              </Link>
+            )}
+            <li>로그아웃</li>
+          </>
         )}
-        {pathname.startsWith("/myfeed") ? (
-          <Link href={"/myfeed"} onClick={toggleSide}>
-            <li className={styles.strongLi}>마이페이지</li>
-          </Link>
-        ) : (
-          <Link href={"/myfeed"} onClick={toggleSide}>
-            <li>마이페이지</li>
-          </Link>
-        )}
-
-        <li>로그아웃</li>
       </ul>
     </div>
   );
