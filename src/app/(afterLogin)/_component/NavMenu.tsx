@@ -11,10 +11,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 import { KeyboardEvent, useEffect, useState } from "react";
 import SideBar from "./SideBar";
+import { IUser } from "@/model/User";
 interface Props {
   session: Session | null;
+  profile: IUser | null;
 }
-export default function NavMenu({ session }: Props) {
+export default function NavMenu({ session, profile }: Props) {
   const segment = useSelectedLayoutSegment();
   const [searchValue, setSearchValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -62,6 +64,7 @@ export default function NavMenu({ session }: Props) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
   return (
     <header className={style.headerWrapper}>
       <section className={style.leftSection}>
@@ -86,6 +89,7 @@ export default function NavMenu({ session }: Props) {
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => activeEnter(e)}
             onFocus={() => setIsFocused(true)}
+            autoFocus={isFocused}
           />
         </div>
         <div style={{ paddingLeft: 20 }} className={style.burgur}>
@@ -97,6 +101,7 @@ export default function NavMenu({ session }: Props) {
         <SideBar
           isOpen={isOpen}
           user={session?.user as User | null}
+          profile={profile}
           setIsOpen={setIsOpen}
         />
         {isOpen && (
@@ -139,7 +144,7 @@ export default function NavMenu({ session }: Props) {
 
           {session ? (
             <>
-              <MypageDropdown user={session.user as User} />
+              <MypageDropdown profile={profile} />
             </>
           ) : (
             <>

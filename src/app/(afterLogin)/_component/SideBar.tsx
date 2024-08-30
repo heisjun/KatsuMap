@@ -5,14 +5,17 @@ import { User } from "@/app/_lib/definitions";
 import { usePathname, useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
+import { IUser } from "@/model/User";
+import { profile } from "console";
 
 interface ISideBar {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
   user: User | null;
+  profile: IUser | null;
 }
 export default function SideBar(props: ISideBar) {
-  const { isOpen, setIsOpen, user } = props;
+  const { isOpen, setIsOpen, user, profile } = props;
   const pathname = usePathname();
   const toggleSide = () => {
     setIsOpen(false);
@@ -42,9 +45,9 @@ export default function SideBar(props: ISideBar) {
           <div className={styles.profileBlock}>
             <img
               className={styles.profile}
-              src={user.image ? user.image : "/avatar.png"}
+              src={profile?.image ? profile.image : "/avatar.png"}
             />
-            <div>{user.name}</div>
+            <div>{profile?.nickname ? profile.nickname : profile?.name}</div>
           </div>
         ) : (
           <div className={styles.loginHeader}>

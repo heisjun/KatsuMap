@@ -5,18 +5,18 @@ import styles from "./mypageDropDown.module.css";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
-import { User } from "@/app/_lib/definitions";
+import { IUser } from "@/model/User";
 
 interface Props {
-  user: User;
+  profile: IUser | null;
 }
-export default function MypageDropdown({ user }: Props) {
+export default function MypageDropdown({ profile }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const onLogout = () => {
     queryClient.removeQueries({
-      queryKey: ["store", "info", user.email],
+      queryKey: ["store", "info", profile?.email],
     });
     queryClient.removeQueries({
       queryKey: ["mypage"],
@@ -69,7 +69,7 @@ export default function MypageDropdown({ user }: Props) {
             <img
               className={styles.dropDownBtn}
               onClick={() => onOpenBtn(index)}
-              src={user.image ? user.image : "/Logo.png"}
+              src={profile?.image ? profile.image : "/avatar.png"}
             />
             {isActive[index] && (
               <div className={styles.dropDownContent} ref={dropdownListRef}>
