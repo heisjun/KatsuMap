@@ -31,11 +31,11 @@ export default function MypageLayout({ children }: Props) {
         </Link>
         {segment === null ? (
           <Link href={"/myfeed"} className={style.onLink}>
-            <span>회원정보 변경</span>
+            <span>회원정보수정</span>
           </Link>
         ) : (
           <Link href={"/myfeed"} className={style.link}>
-            <span>회원정보 변경</span>
+            <span>회원정보수정</span>
           </Link>
         )}
       </div>

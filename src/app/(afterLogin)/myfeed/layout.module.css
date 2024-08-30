@@ -23,8 +23,6 @@
 }
 
 
-
-
 .link{
     width: 100%;
     border-bottom: 2px solid #E4E7EB;
@@ -35,6 +33,9 @@
 .link span{
     font-size: 18px;
     padding: 16px;
+    @media (max-width: 500px) {
+        font-size: 15px;
+    }
 }
 
 .onLink{
@@ -48,4 +49,8 @@
     color: #D4A373;
     font-size: 18px;
     padding: 16px;
+    @media (max-width: 500px) {
+        font-size: 15px;
+    }
 }
+
