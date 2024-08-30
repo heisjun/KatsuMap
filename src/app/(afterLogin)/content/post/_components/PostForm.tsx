@@ -60,27 +60,10 @@ const PostForm = () => {
     });
   };
 
-  const handleUploadComplete = (urls: string[]) => {
-    setUploadedUrls(urls);
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (uploading) return; // Prevent multiple submissions
-
-    // Trigger the upload
-    if (uploadFormRef.current) {
-      setUploading(true);
-      uploadFormRef.current.saveHandler(); // Call the saveHandler to upload images
-    }
-  };
-
   const finalizeSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    handleSubmit(e);
+    const imgUrlsArray = await uploadFormRef.current.saveHandler();
 
-    const imgUrlsArray = uploadedUrls;
     const convertExplain = post.explain.replace("\n\n", "<br>");
     const convertTime = post.timeStr + "-" + post.timeEnd;
     const breakTime = viewBreak ? post.breakStr + "-" + post.breakEnd : "없음";
@@ -381,10 +364,7 @@ const PostForm = () => {
             </div>
           </div>
         </div>
-        <UploadForm
-          ref={uploadFormRef}
-          onUploadComplete={handleUploadComplete}
-        />
+        <UploadForm ref={uploadFormRef} />
         <input
           className={styles.titleBlock}
           type="text"

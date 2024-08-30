@@ -11,11 +11,7 @@ import { FaFileImage } from "react-icons/fa6";
 import { TiDelete } from "react-icons/ti";
 import styles from "./uploadform.module.css";
 
-type UploadFormProps = {
-  onUploadComplete: (urls: string[]) => void;
-};
-
-const UploadForm = forwardRef(({ onUploadComplete }: UploadFormProps, ref) => {
+const UploadForm = forwardRef((props, ref) => {
   const [previewImgs, setPreviewImgs] = useState<FileList | null>();
 
   // 이미지 저장
@@ -35,7 +31,6 @@ const UploadForm = forwardRef(({ onUploadComplete }: UploadFormProps, ref) => {
     }).then((res) => res.json());
 
     if (result.message === "OK" && result.urls) {
-      onUploadComplete(result.urls);
       return result.urls;
     }
 
