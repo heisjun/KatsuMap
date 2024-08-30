@@ -1,4 +1,4 @@
-import { KatsuInfo } from "@/app/_lib/definitions";
+import { User } from "@/app/_lib/definitions";
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
 import { NextResponse } from "next/server";
@@ -9,7 +9,8 @@ export async function GET(
 ) {
   noStore();
   try {
-    const data = await sql<KatsuInfo>`SELECT name FROM users where 	
+    const data =
+      await sql<User>`SELECT name,email,image,provider,nickname FROM users where 	
 email = ${params.userId}`;
 
     return NextResponse.json(data.rows[0]);

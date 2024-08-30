@@ -10,7 +10,7 @@ export async function GET(
   noStore();
   try {
     const data =
-      await sql<KatsuInfo>`SELECT name,title FROM katsu_info where post_id = ${params.postId}`;
+      await sql<KatsuInfo>`SELECT name,title,image_url FROM katsu_info where post_id = ${params.postId}`;
 
     return NextResponse.json(data.rows[0]);
   } catch (error) {

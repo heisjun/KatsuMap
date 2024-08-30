@@ -19,6 +19,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${store.name} / KatsuMap`,
     description: `${store.title}`,
+    icons: {
+      icon: `${store.image_url}`,
+    },
   };
 }
 
