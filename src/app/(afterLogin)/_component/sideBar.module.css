@@ -19,7 +19,7 @@
 .ulMenu{
     padding-top: 20px;
     justify-content: end;
-    font-size: 20px;
+    font-size: 18px;
     list-style-type: none;
 
 }
@@ -54,7 +54,7 @@
 .profileBlock{
     display: flex;
     align-items: center;
-    color: black;
+    color: bl;
 }
 
 .profile{
@@ -77,16 +77,41 @@
     justify-content: space-between;
 }
 
-.loginHeader div{
+.loginBtn{
     font-size: 15px;
-    padding: 10px;
-    border: 1px solid gray;
+    padding: 10px 5px;
+    border: 1px solid #D4A373;
     border-radius: 5px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: black;
+    color: #D4A373;
+}
+
+.loginBtn:hover{
+    background-color: #e0bc9898;
+ 
+}
+
+.registerBtn{
+    font-size: 15px;
+    padding: 10px 5px;
+    background-color: #D4A373;
+    border: 1px solid #D4A373;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.registerBtn:hover{
+    background-color: #D4A373;
+    opacity: 0.8;
+    color: white;
+
 }
 
 .blank{

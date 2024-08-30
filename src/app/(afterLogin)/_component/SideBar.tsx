@@ -1,9 +1,10 @@
-import { RxCross1 } from "react-icons/rx";
 import styles from "./sideBar.module.css";
 import Link from "next/link";
 import cx from "classnames";
 import { User } from "@/app/_lib/definitions";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 
 interface ISideBar {
   isOpen: boolean;
@@ -15,6 +16,23 @@ export default function SideBar(props: ISideBar) {
   const pathname = usePathname();
   const toggleSide = () => {
     setIsOpen(false);
+  };
+
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const onLogout = () => {
+    setIsOpen(false);
+    queryClient.removeQueries({
+      queryKey: ["store", "info", user?.email],
+    });
+    queryClient.removeQueries({
+      queryKey: ["mypage"],
+    });
+    signOut({ redirect: false }).then(() => {
+      router.replace("/");
+      router.refresh();
+    });
   };
 
   return (
@@ -30,9 +48,21 @@ export default function SideBar(props: ISideBar) {
           </div>
         ) : (
           <div className={styles.loginHeader}>
-            <div>로그인</div>
+            <Link
+              href="/loginform"
+              onClick={toggleSide}
+              className={styles.loginBtn}
+            >
+              <div>로그인</div>
+            </Link>
             <pre className={styles.blank} />
-            <div>회원가입</div>
+            <Link
+              href="/register"
+              onClick={toggleSide}
+              className={styles.registerBtn}
+            >
+              <div>회원가입</div>
+            </Link>
           </div>
         )}
 
@@ -72,7 +102,7 @@ export default function SideBar(props: ISideBar) {
                 <li>마이페이지</li>
               </Link>
             )}
-            <li>로그아웃</li>
+            <li onClick={() => onLogout()}>로그아웃</li>
           </>
         )}
       </ul>
