@@ -4,6 +4,7 @@ export const getUserServer = async ({
   queryKey: [string, string];
 }) => {
   const [_1, userId] = queryKey;
+  if (!userId) return null;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/mypage/${userId}/username`,
     {
