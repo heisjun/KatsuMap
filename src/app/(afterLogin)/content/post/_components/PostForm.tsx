@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent, useCallback, useRef } from "react";
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
 import { v4 as uuidv4 } from "uuid";
 import DaumPostcode from "react-daum-postcode";
 import styles from "./postForm.module.css";
@@ -11,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowDown } from "react-icons/io";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaPenSquare } from "react-icons/fa";
+import LoadingSpinner from "@/app/(afterLogin)/_component/LoadingSpinner";
 type Post = {
   name: string;
   title: string;
@@ -45,7 +53,6 @@ const PostForm = () => {
     table_id: "",
   });
 
-  const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
 
   const uploadFormRef = useRef<any>(null);
@@ -58,10 +65,28 @@ const PostForm = () => {
       ...post,
       [name]: value,
     });
+
+    if (e.target instanceof HTMLTextAreaElement) {
+      autoResizeTextarea(e.target);
+    }
   };
+  const autoResizeTextarea = (textarea: HTMLTextAreaElement) => {
+    // Reset height to allow the textarea to shrink when removing text
+    textarea.style.height = "auto";
+    // Set height based on scrollHeight
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
+  useEffect(() => {
+    const textarea = document.querySelector("textarea");
+    if (textarea) {
+      autoResizeTextarea(textarea as HTMLTextAreaElement);
+    }
+  }, [post.explain]); //
 
   const finalizeSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setUploading(true);
     const imgUrlsArray = await uploadFormRef.current.saveHandler();
 
     const convertExplain = post.explain.replace("\n\n", "<br>");
@@ -269,26 +294,27 @@ const PostForm = () => {
             <div className={styles.timeBlock}>
               <div className={styles.contentLabel}>브레이크타임</div>
               <ToggleBtn isOn={viewBreak} setisOn={setViewBreak} />
-              {viewBreak && (
-                <>
-                  <input
-                    type="time"
-                    name="breakStr"
-                    value={post.breakStr}
-                    onChange={handleChange}
-                    required
-                  />
-                  <div className={styles.timeLine}>-</div>
-                  <input
-                    type="time"
-                    name="breakEnd"
-                    value={post.breakEnd}
-                    onChange={handleChange}
-                    required
-                  />
-                </>
-              )}
             </div>
+            {viewBreak && (
+              <div className={styles.breakTimeBlock}>
+                <input
+                  type="time"
+                  name="breakStr"
+                  value={post.breakStr}
+                  onChange={handleChange}
+                  required
+                />
+                <div className={styles.timeLine}>-</div>
+                <input
+                  type="time"
+                  name="breakEnd"
+                  value={post.breakEnd}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
+
             <div className={styles.contentBlock}>
               <div className={styles.contentLabel}>휴무일</div>
               <ToggleBtn isOn={viewOff} setisOn={setViewOff} />
@@ -387,8 +413,13 @@ const PostForm = () => {
         <button type="submit" disabled={uploading} className={styles.submitBtn}>
           글쓰기
         </button>
-        {uploading && <div>업로드 중...</div>}
       </form>
+      {uploading && (
+        <div className={styles.loadingOverlay}>
+          <span>업로드중</span>
+          <LoadingSpinner />
+        </div>
+      )}
     </>
   );
 };
