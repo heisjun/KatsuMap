@@ -86,7 +86,7 @@ export default function SwipeModal({ data, idx }: Props) {
           <a href={`/${data[idx].post_id}`}>{data[idx].name}</a>
         </div>
         <div>{data[idx].address}</div>
-        <div className={styles.imgContainer}>
+        <div>
           <ImgSwiper images={data[idx].image_urls} singleImage={true} />
         </div>
         <div className={styles.textContainer}>
@@ -96,7 +96,7 @@ export default function SwipeModal({ data, idx }: Props) {
             </div>
             <div className={styles.infoMenu}>
               {data[idx].menu
-                .split("/")
+                .split(",")
                 .map((menuInfo) => menuInfo.split(" "))
                 .map((ele, idx) => (
                   <div className={styles.category} key={idx}>

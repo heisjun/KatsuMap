@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props) {
     },
     openGraph: {
       title: `${store.name} / KatsuMap`,
-      description: `${store.title} 상세보기`,
+      description: `${store.title}`,
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/${params.postId}`,
       images: [
         {
@@ -38,7 +38,6 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function StoreInfo({ params }: Props) {
-  console.log("링크:", `${process.env.NEXT_PUBLIC_BASE_URL}/${params.postId}`);
   const { postId } = params;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
