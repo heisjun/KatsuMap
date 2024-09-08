@@ -24,13 +24,15 @@ async function getUser(email: string): Promise<User | undefined> {
 async function createUser(
   id: string,
   name: string,
+  nickname: string,
   email: string,
-  password: string
+  password: string,
+  image: string
 ): Promise<User> {
   try {
     const result: QueryResult<User> = await sql`
-      INSERT INTO users (id, name, email, password)
-      VALUES (${id}, ${name}, ${email}, ${password})
+      INSERT INTO users (id, name, email, password, image, nickname)
+      VALUES (${id}, ${name}, ${email}, ${password},${image},${nickname})
       RETURNING *;
     `;
     return result.rows[0];
@@ -43,33 +45,35 @@ async function createUser(
 // POST 함수 정의
 export async function POST(request: NextRequest) {
   // 1. 회원가입에 입력한 정보 받아오기
-  const body = await request.json();
+  const { name, nickname, email, password, image } = await request.json();
 
   // 2. 데이터 유효성 검사
-  const validation = schema.safeParse(body);
+  const validation = schema.safeParse({ email, password });
   // 오류가 발생하면 오류 메시지를 응답으로 리턴
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
 
   // 3. 가입 여부 검증
-  const user = await getUser(body.email);
+  const user = await getUser(email);
   // 이미 가입되어 있는 계정이면 오류 메시지를 응답으로 전달
   if (user) {
     return NextResponse.json({ error: "User already exists" }, { status: 400 });
   }
 
   // 4. 비밀 번호 암호화
-  const hashedPassword = await bcrypt.hash(body.password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   // 5. 사용자 생성
   const userId = uuidv4();
   try {
     const newUser = await createUser(
       userId,
-      body.name,
-      body.email,
-      hashedPassword
+      name,
+      nickname,
+      email,
+      hashedPassword,
+      image
     );
     // 6. 생성된 사용자의 정보를 응답으로 반환
     return NextResponse.json({ newUser }, { status: 201 });
