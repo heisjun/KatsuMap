@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
-import { User } from "@/app/_lib/definitions";
+import { IUser } from "@/model/User";
 
-async function getUser(email: string): Promise<User | undefined> {
+async function getUser(email: string): Promise<IUser> {
   try {
-    const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
+    const user = await sql<IUser>`SELECT * FROM users WHERE email=${email}`;
     return user.rows[0];
   } catch (error) {
     console.error("Failed to fetch user:", error);
