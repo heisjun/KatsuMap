@@ -26,8 +26,7 @@ export default function NavMenu({ session, profile }: Props) {
   };
   const router = useRouter();
 
-  const handleButtonClick = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const handleButtonClick = () => {
     if (isFocused && searchValue) {
       router.push(`/search?query=${encodeURIComponent(searchValue)}`);
     } else {
@@ -35,6 +34,9 @@ export default function NavMenu({ session, profile }: Props) {
     }
   };
 
+  const handleButtonTouchEnd = () => {
+    handleButtonClick();
+  };
   const activeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       router.push(`/search?query=${encodeURIComponent(searchValue)}`);
@@ -77,7 +79,8 @@ export default function NavMenu({ session, profile }: Props) {
           <button
             className={style.btnSearch}
             onClick={handleButtonClick}
-            onTouchStart={handleButtonClick}
+            onTouchStart={handleButtonTouchEnd}
+            onTouchEnd={handleButtonTouchEnd}
           >
             <IoSearchOutline className={style.searchIcon} />
           </button>

@@ -9,7 +9,7 @@ import { auth } from "@/auth";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "돈가스여지도",
+  title: "돈가스여지도 / KatsuMap",
   description: "돈가스여지도",
 };
 

@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 import { IUser } from "@/model/User";
-import { profile } from "console";
 
 interface ISideBar {
   isOpen: boolean;
