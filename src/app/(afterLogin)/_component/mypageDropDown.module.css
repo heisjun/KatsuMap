@@ -42,11 +42,11 @@
 }
 
 .contentItem{
-font-weight: 400;
-  padding: 15px;
-  cursor: pointer;
-  transition: all 0.2s;
-
+    font-weight: 400;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 100;
 }
 
 .contentItem:hover{
