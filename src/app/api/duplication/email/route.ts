@@ -19,6 +19,8 @@ function convertProvider(provider: string | null) {
     return "카카오 간편가입으";
   } else if (provider === "naver") {
     return "네이버 간편가입으";
+  } else {
+    return "알 수 없음";
   }
 }
 
