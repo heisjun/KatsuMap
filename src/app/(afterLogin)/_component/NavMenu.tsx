@@ -9,9 +9,11 @@ import { User } from "@/app/_lib/definitions";
 import { IoSearchOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useRouter } from "next/navigation";
-import { KeyboardEvent, useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import SideBar from "./SideBar";
 import { IUser } from "@/model/User";
+import cx from "classnames";
+
 interface Props {
   session: Session | null;
   profile: IUser | null;
@@ -19,24 +21,25 @@ interface Props {
 export default function NavMenu({ session, profile }: Props) {
   const segment = useSelectedLayoutSegment();
   const [searchValue, setSearchValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const toggleSide = () => {
     setIsOpen(true);
   };
   const router = useRouter();
 
-  const handleButtonClick = () => {
-    if (isFocused && searchValue) {
+  const handleCircleClick = () => {
+    setIsExpanded(true);
+  };
+
+  const handleSearch = () => {
+    if (searchValue.trim()) {
       router.push(`/search?query=${encodeURIComponent(searchValue)}`);
-    } else {
-      setIsFocused(true);
     }
   };
 
-  const handleButtonTouchEnd = () => {
-    handleButtonClick();
-  };
   const activeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       router.push(`/search?query=${encodeURIComponent(searchValue)}`);
@@ -46,6 +49,22 @@ export default function NavMenu({ session, profile }: Props) {
   const handleCloseSidebar = () => {
     setIsOpen(false);
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
+      setIsExpanded(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // 사이드바 외부를 클릭했을 때 사이드바 닫기
   useEffect(() => {
@@ -75,25 +94,22 @@ export default function NavMenu({ session, profile }: Props) {
         </Link>
       </section>
       <section className={style.rigntSection}>
-        <div className={style.searchBox}>
-          <button
-            className={style.btnSearch}
-            onClick={handleButtonClick}
-            onTouchStart={handleButtonTouchEnd}
-            onTouchEnd={handleButtonTouchEnd}
-          >
-            <IoSearchOutline className={style.searchIcon} />
-          </button>
+        <div
+          ref={containerRef}
+          className={style.searchBox}
+          onClick={handleCircleClick}
+        >
           <input
             type="text"
-            className={style.inputSearch}
-            placeholder="어떤 돈가스를 찾으시나요"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
+            className={cx(style.inputSearch, isExpanded ? style.expanded : "")}
+            placeholder="어떤 돈가스를 찾으시나요"
             onKeyDown={(e) => activeEnter(e)}
-            onFocus={() => setIsFocused(true)}
-            autoFocus={isFocused}
           />
+          <button onClick={handleSearch} className={style.btnSearch}>
+            <IoSearchOutline className={style.searchIcon} />
+          </button>
         </div>
         <div style={{ paddingLeft: 20 }} className={style.burgur}>
           <RxHamburgerMenu
