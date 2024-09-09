@@ -16,3 +16,18 @@
     padding-right: 10px;
 }
 }
+
+.bannerContainer{
+  max-width: 1240px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+.banner{
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+
+}

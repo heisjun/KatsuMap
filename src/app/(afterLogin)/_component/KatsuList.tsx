@@ -7,6 +7,7 @@ import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
 import { useSession } from "next-auth/react";
 import FilterComponent from "./FilterBar";
+import Link from "next/link";
 
 type Props = {
   searchParams: { order: string };
@@ -27,6 +28,11 @@ export default function KatsuList({ searchParams }: Props) {
 
   return (
     <div className={styles.mainWrapper}>
+      <div className={styles.bannerContainer}>
+        <Link href={"/donbti"}>
+          <img src="/banner.jpg" className={styles.banner} />
+        </Link>
+      </div>
       <FilterComponent />
       <main className={styles.listContainer}>
         {data?.map((item: IKatsuInfo, idx: any) => {
