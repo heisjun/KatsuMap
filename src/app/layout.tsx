@@ -12,6 +12,18 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logoIcon.png",
   },
+  openGraph: {
+    title: ` KatsuMap`,
+    description: `돈가스의 모든것`,
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+    images: [
+      {
+        url: "/logoIcon.png", // 썸네일 이미지 URL
+        alt: `카츠맵 아이콘`, // 이미지 대체 텍스트
+      },
+    ],
+    siteName: "KatsuMap", // 사이트 이름
+  },
 };
 
 export default function RootLayout({
