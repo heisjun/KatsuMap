@@ -23,7 +23,7 @@ export default function LoginForm() {
       if (response?.error) {
         setMessage("아이디와 비밀번호가 일치하지 않습니다.");
       } else {
-        window.location.href = "/register";
+        window.location.href = "/";
         router.refresh();
       }
     } catch (err) {
