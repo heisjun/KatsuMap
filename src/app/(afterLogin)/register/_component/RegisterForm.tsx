@@ -42,9 +42,9 @@ export default function RegisterForm() {
       if (password !== passwordChk) {
         error = "비밀번호가 일치하지 않습니다.";
       }
-    } else if (field === "nickname") {
+    } /* else if (field === "nickname") {
       error = "이미 사용중인 닉네임 입니다";
-    }
+    } */
 
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -329,9 +329,9 @@ export default function RegisterForm() {
               errors.nickname ? styles.errorInput : styles.contentInput
             )}
           />
-          {errors.nickname && (
+          {/*  {errors.nickname && (
             <span className={styles.errorSpan}>{errors.nickname}</span>
-          )}
+          )} */}
         </div>
         <hr />
         <button type="submit" className={styles.submitBtn}>

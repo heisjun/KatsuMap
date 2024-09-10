@@ -23,7 +23,7 @@ export default function LoginForm() {
       if (response?.error) {
         setMessage("아이디와 비밀번호가 일치하지 않습니다.");
       } else {
-        router.replace("/");
+        window.location.href = "/register";
         router.refresh();
       }
     } catch (err) {
@@ -91,8 +91,12 @@ export default function LoginForm() {
           </div>
           <div className={style.message}>{message}</div>
           <div className={style.modalFooter}>
-            <button className={style.actionButton} disabled={!id && !password}>
-              로그인하기
+            <button
+              type="submit"
+              className={style.actionButton}
+              disabled={!id || !password}
+            >
+              로그인
             </button>
           </div>
           <div className={style.signInBlock} onClick={goToRegister}>
