@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowDown } from "react-icons/io";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaPenSquare } from "react-icons/fa";
+import { RiCloseLargeLine } from "react-icons/ri";
 import LoadingSpinner from "@/app/(afterLogin)/_component/LoadingSpinner";
 type Post = {
   name: string;
@@ -88,6 +89,11 @@ const PostForm = () => {
     e.preventDefault();
     setUploading(true);
     const imgUrlsArray = await uploadFormRef.current.saveHandler();
+    if (!imgUrlsArray) {
+      alert("이미지를 등록해 주세요!");
+      setUploading(false);
+      return;
+    }
 
     const convertExplain = post.explain.replace("\n\n", "<br>");
     const convertTime = post.timeStr + "-" + post.timeEnd;
@@ -249,16 +255,26 @@ const PostForm = () => {
               />
               <div>
                 {showPostcode && (
-                  <DaumPostcode
-                    onComplete={handleComplete}
-                    autoClose={false}
-                    style={{
-                      position: "absolute",
-                      width: 400,
-                      top: "200px",
-                      zIndex: 1000,
-                    }}
-                  />
+                  <div className={styles.loadingOverlay}>
+                    <div className={styles.addressContainer}>
+                      <div className={styles.addressHeader}>
+                        <span>주소찾기</span>
+                        <button
+                          className={styles.closeButton}
+                          title="닫기"
+                          onClick={() => setShowPostcode(false)}
+                        >
+                          <RiCloseLargeLine style={{ fontSize: 23 }} />
+                        </button>
+                      </div>
+                      <DaumPostcode
+                        onComplete={handleComplete}
+                        autoClose={true}
+                        className={styles.postCode}
+                        style={{ width: 400 }}
+                      />
+                    </div>
+                  </div>
                 )}
                 <Map
                   center={{
