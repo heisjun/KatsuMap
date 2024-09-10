@@ -14,6 +14,7 @@
     margin-bottom: 20px;
     background-color: white;
     border: 1px solid black;
+    color: black;
     border-radius: 50px;
     font-size: 16px;
     font-weight: bold;
@@ -22,8 +23,6 @@
 }
 
 .selectBtn:hover{
-    background-color: black;
-    color: white;
 }
 .selectBlock{
     display: flex;
@@ -85,17 +84,6 @@
    
 }
 
-.storeBookMark{
-    position: absolute;
-    width: 40px;
-    font-size: 35px;
-    z-index: 10;
-    bottom: 0px;
-    right: 0px;
-    color: white;
-    cursor: pointer;
-    padding: 0px 10px 5px 0px;
-}
 
 .storeName{
     font-size: 16px;
@@ -127,10 +115,10 @@
 
 .progressbarContainer{
     width: 100%;
-  background-color: #e0e0e0;
-  height: 10px;
-  border-radius: 5px;
-  margin: 20px 0;
+    background-color: #e0e0e0;
+    height: 10px;
+    border-radius: 5px;
+    margin: 20px 0;
 }
 
 .progressBar {
