@@ -1,0 +1,14 @@
+.swiperImg{
+    max-width: 800px;
+    max-height: 350px;
+    width: 100%;
+    height: auto;
+    object-fit: cover 
+}
+
+.swipeBlock{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+

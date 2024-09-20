@@ -7,7 +7,7 @@ import { getStoreInfo } from "@/app/(afterLogin)/_lib/getStoreInfo";
 import { IKatsuInfo } from "@/model/KatsuInfo";
 import { useSession } from "next-auth/react";
 import FilterComponent from "./FilterBar";
-import Link from "next/link";
+import BannerSwiper from "./BannerSwiper";
 
 type Props = {
   searchParams: { order: string };
@@ -29,9 +29,18 @@ export default function KatsuList({ searchParams }: Props) {
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.bannerContainer}>
-        <Link href={"/donbti"}>
-          <img src="/banner.jpg" className={styles.banner} />
-        </Link>
+        <BannerSwiper
+          infos={[
+            {
+              banner: "/dbtiBanner5.jpg",
+              goto: `${process.env.NEXT_PUBLIC_BASE_URL}/donbti`,
+            },
+            {
+              banner: "/katsumapBanner.jpg",
+              goto: `${process.env.NEXT_PUBLIC_BASE_URL}/map`,
+            },
+          ]}
+        />
       </div>
       <FilterComponent />
       <main className={styles.listContainer}>
