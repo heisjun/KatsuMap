@@ -24,9 +24,10 @@
 
 .leftSection img{
     width: 70px;
-    height: auto;
+    height: 70px;
     @media (max-width: 500px) {
         width: 60px;
+        height: 60px;
     }
     
 }

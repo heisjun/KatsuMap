@@ -3,8 +3,9 @@
     justify-content: end;
     align-items: center;
     padding: 10px 20px;
-    color: gray;
+    color: #828C94;
     height: 42px;
+    
 }
 
 .filterbarContainer span{

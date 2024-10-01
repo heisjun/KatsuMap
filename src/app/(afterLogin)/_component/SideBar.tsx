@@ -67,44 +67,28 @@ export default function SideBar(props: ISideBar) {
             </Link>
           </div>
         )}
-
-        {/* <RxCross1
-          onClick={toggleSide}
-          onKeyDown={toggleSide}
-          style={{ fontSize: 20, color: "black" }}
-        /> */}
       </div>
       <ul className={styles.ulMenu}>
-        {pathname === "/map" ? (
+        <li className={pathname === "/map" ? styles.strongLi : ""}>
           <Link href={"/map"} onClick={toggleSide}>
-            <li className={styles.strongLi}>돈카츠맵</li>
+            돈카츠맵
           </Link>
-        ) : (
-          <Link href={"/map"} onClick={toggleSide}>
-            <li>돈카츠맵</li>
-          </Link>
-        )}
+        </li>
         {user && (
           <>
-            {pathname === "/content/post" ? (
+            <li className={pathname === "/content/post" ? styles.strongLi : ""}>
               <Link href={"/content/post"} onClick={toggleSide}>
-                <li className={styles.strongLi}>글쓰기</li>
+                글쓰기
               </Link>
-            ) : (
-              <Link href={"/content/post"} onClick={toggleSide}>
-                <li>글쓰기</li>
-              </Link>
-            )}
-            {pathname.startsWith("/myfeed") ? (
+            </li>
+            <li
+              className={pathname.startsWith("/myfeed") ? styles.strongLi : ""}
+            >
               <Link href={"/myfeed"} onClick={toggleSide}>
-                <li className={styles.strongLi}>마이페이지</li>
+                마이페이지
               </Link>
-            ) : (
-              <Link href={"/myfeed"} onClick={toggleSide}>
-                <li>마이페이지</li>
-              </Link>
-            )}
-            <li onClick={() => onLogout()}>로그아웃</li>
+            </li>
+            <li onClick={onLogout}>로그아웃</li>
           </>
         )}
       </ul>

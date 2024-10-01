@@ -41,6 +41,7 @@ export default function BannerSwiper({ infos }: Props) {
                 alt="돈가스 이미지" // alt 텍스트
                 width={800} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
                 height={350} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+                priority
               />
             </div>
           </Link>

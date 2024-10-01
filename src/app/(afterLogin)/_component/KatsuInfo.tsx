@@ -141,8 +141,8 @@ export default function KatsuInfo({ info }: Props) {
           src={info.image_url} // 이미지 경로
           className={styles.storeImage} // 기존 스타일 클래스
           alt="돈가스 이미지" // alt 텍스트
-          width={400} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
-          height={400} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+          width={350} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
+          height={350} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
           priority
         />
 

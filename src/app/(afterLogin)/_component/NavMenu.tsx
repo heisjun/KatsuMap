@@ -107,8 +107,12 @@ export default function NavMenu({ session, profile }: Props) {
             placeholder="어떤 돈가스를 찾으시나요"
             onKeyDown={(e) => activeEnter(e)}
           />
-          <button onClick={handleSearch} className={style.btnSearch}>
-            <IoSearchOutline className={style.searchIcon} />
+          <button
+            onClick={handleSearch}
+            className={style.btnSearch}
+            aria-label="검색 버튼"
+          >
+            <IoSearchOutline aria-hidden="true" className={style.searchIcon} />
           </button>
         </div>
         <div style={{ paddingLeft: 20 }} className={style.burgur}>

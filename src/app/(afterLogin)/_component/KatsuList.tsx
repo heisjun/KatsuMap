@@ -32,7 +32,7 @@ export default function KatsuList({ searchParams }: Props) {
         <BannerSwiper
           infos={[
             {
-              banner: "/dbtiBanner5.jpg",
+              banner: "/dbtiBanner5.webp",
               goto: `${process.env.NEXT_PUBLIC_BASE_URL}/donbti`,
             },
             {
