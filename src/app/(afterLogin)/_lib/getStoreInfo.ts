@@ -15,11 +15,13 @@ export const getStoreInfo: QueryFunction<
     }/api/store/list?user_email=${user_email}&${urlSearchParams.toString()}&cursor=${pageParam}`,
     {
       next: {
-        tags: ["posts", "search", user_email, searchParams.order],
+        tags: ["posts", "search", user_email, searchParams.order].filter(
+          (tag): tag is string => typeof tag === "string",
+        ),
       },
       credentials: "include",
       cache: "no-store",
-    }
+    },
   );
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
