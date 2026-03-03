@@ -7,7 +7,7 @@ async function seedKatsuInfo(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Create the "katsu_info" table if it doesn't exist
-    const createTable = await client.sql`
+    /* const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS katsu_info (
         post_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -21,14 +21,12 @@ async function seedKatsuInfo(client) {
       );
     `;
 
-    console.log(`Created "katsu_info" table`);
-
-    // Insert data into the "katsu_info" table
+    console.log(`Created "katsu_info" table`); */
     const insertedKatsuInfos = await Promise.all(
       stores.map(
         (store) => client.sql`
-        INSERT INTO katsu_info (post_id, name, title, explain, image_url, lat, lng, time, menu)
-        VALUES (${store.post_id}, ${store.name}, ${store.title},${store.explain}, ${store.image_url},${store.lat},${store.lng},${store.time},${store.menu})
+        INSERT INTO katsu_info (post_id, name, title, explain, image_url, image_urls, lat, lng, time, menu, address)
+        VALUES (${store.post_id}, ${store.name}, ${store.title},${store.explain},${store.image_url}, ${store.image_urls},${store.lat},${store.lng},${store.time},${store.menu},${store.address})
         ON CONFLICT (post_id) DO NOTHING;
       `
       )
@@ -37,7 +35,6 @@ async function seedKatsuInfo(client) {
     console.log(`Seeded ${insertedKatsuInfos.length} katsu_info`);
 
     return {
-      createTable,
       customers: insertedKatsuInfos,
     };
   } catch (error) {
@@ -88,8 +85,8 @@ async function seedUsers(client) {
 
 async function main() {
   const client = await db.connect();
-  await seedUsers(client);
-  //await seedKatsuInfo(client);
+  //await seedUsers(client);
+  await seedKatsuInfo(client);
 
   await client.end();
 }
