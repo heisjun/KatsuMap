@@ -19,7 +19,7 @@ export async function PUT(request: Request, { params }: RequestParams) {
     if (!nickname || !image) {
       return NextResponse.json(
         { error: "Nickname and image are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function PUT(request: Request, { params }: RequestParams) {
       SET nickname = ${nickname}, image = ${image} 
       WHERE email = ${params.userId}`;
 
-    if (result.rowCount > 0) {
+    if (result.rowCount && result.rowCount > 0) {
       return NextResponse.json({ message: "Profile updated successfully" });
     } else {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
