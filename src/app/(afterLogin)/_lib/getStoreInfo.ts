@@ -3,14 +3,16 @@ import { QueryFunction } from "@tanstack/query-core";
 
 export const getStoreInfo: QueryFunction<
   IKatsuInfo[],
-  [_1: string, _2: string, user_email: string, searchParams: { order: string }]
-> = async ({ queryKey }) => {
+  [_1: string, _2: string, user_email: string, searchParams: { order: string }],
+  number
+> = async ({ queryKey, pageParam }) => {
   const [_1, _2, user_email, searchParams] = queryKey;
   const urlSearchParams = new URLSearchParams(searchParams);
+
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/store/list?user_email=${user_email}&${urlSearchParams.toString()}`,
+    }/api/store/list?user_email=${user_email}&${urlSearchParams.toString()}&cursor=${pageParam}`,
     {
       next: {
         tags: ["posts", "search", user_email, searchParams.order],

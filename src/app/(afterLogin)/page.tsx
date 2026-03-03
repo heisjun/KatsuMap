@@ -15,9 +15,10 @@ export default async function Main({ searchParams }: Props) {
   const session = await auth();
   const user_email = session?.user?.email as string;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ["store", "info", user_email, searchParams],
     queryFn: getStoreInfo,
+    initialPageParam: 0, //커서값
   });
 
   const dehydratedState = dehydrate(queryClient);

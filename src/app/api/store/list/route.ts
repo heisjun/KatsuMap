@@ -5,15 +5,18 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   noStore();
+  const { searchParams } = new URL(req.url);
+  const userEmail = searchParams.get("user_email");
+  const order = searchParams.get("order");
+  const page = parseInt(searchParams.get("cursor") || "0");
+  const limit = 8;
+  const offset = page * limit;
   try {
-    const { searchParams } = new URL(req.url);
-    const userEmail = searchParams.get("user_email");
-    const order = searchParams.get("order");
-
+    let data;
     if (order) {
-      const data = await sql<KatsuInfo>`SELECT 
+      data = await sql<KatsuInfo>`SELECT 
     s.post_id, s.name, s.title, s.explain, s.image_url, s.lat, s.lng, s.address, s.time, s.menu,
-    us.scrap_id, s.image_urls, s.table_id,
+    us.scrap_id, s.image_urls, s.table_id, s.post_number,
     CASE WHEN us.scrap_id IS NOT NULL THEN 1 ELSE 0 END AS is_scrap,
     COALESCE(scrap_count.scrap_count, 0) AS scrap_count
     FROM 
@@ -30,26 +33,30 @@ export async function GET(req: Request) {
             GROUP BY 
                 post_id
         ) scrap_count ON s.post_id = scrap_count.post_id
-    ORDER BY scrap_count DESC`;
-      return NextResponse.json(data.rows);
+        ORDER BY scrap_count DESC
+        LIMIT ${limit}
+        OFFSET ${offset}`;
     } else {
-      const data = await sql<KatsuInfo>`SELECT 
+      data = await sql<KatsuInfo>`SELECT 
     s.post_id, s.name, s.title, s.explain, s.image_url, s.lat, s.lng, s.address, s.time, s.menu,
-    us.scrap_id, s.createat,
+    us.scrap_id, s.createat, s.post_number,
     CASE WHEN us.scrap_id IS NOT NULL THEN 1 ELSE 0 END AS is_scrap
     FROM 
         katsu_info s
     LEFT JOIN 
         scraps us ON s.post_id = us.post_id AND us.user_email = ${userEmail}
-    ORDER BY createat DESC`;
-      return NextResponse.json(data.rows);
+        ORDER BY createat DESC
+        LIMIT ${limit}
+        OFFSET ${offset}`;
     }
+
+    return NextResponse.json(data.rows);
   } catch (error) {
     return NextResponse.json(
       {
         error: error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
