@@ -19,9 +19,11 @@ function RQProvider({ children }: Props) {
           retryOnMount: true,
           refetchOnReconnect: false,
           retry: false,
+          staleTime: 60 * 1000, // 1분간 fresh 상태 유지
+          gcTime: 5 * 60 * 1000, // 5분간 가비지 컬렉션 방지
         },
       },
-    })
+    }),
   );
 
   return (
