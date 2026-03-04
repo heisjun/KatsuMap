@@ -22,7 +22,7 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/waiting/${tableId}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/waiting/${tableId}`,
       );
 
       if (!response.ok) {
@@ -48,7 +48,7 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
 
   const handleWaitingDisabled = (
     operationInfo: { waitingDisabledReason: any },
-    totalTeamCount: SetStateAction<undefined>
+    totalTeamCount: SetStateAction<undefined>,
   ) => {
     const { waitingDisabledReason } = operationInfo;
 
