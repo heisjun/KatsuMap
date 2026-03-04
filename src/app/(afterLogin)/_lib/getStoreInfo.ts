@@ -18,9 +18,9 @@ export const getStoreInfo: QueryFunction<
         tags: ["posts", "search", user_email, searchParams.order].filter(
           (tag): tag is string => typeof tag === "string",
         ),
+        revalidate: 60,
       },
       credentials: "include",
-      cache: "no-store",
     },
   );
   // The return value is *not* serialized

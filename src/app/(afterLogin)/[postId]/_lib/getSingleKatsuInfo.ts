@@ -11,9 +11,9 @@ export const getSingleKatsuInfo: QueryFunction<
     {
       next: {
         tags: ["store", postId],
+        revalidate: 60,
       },
-      cache: "no-store",
-    }
+    },
   );
   if (!res) {
     throw new Error("Failed to fetch data");
