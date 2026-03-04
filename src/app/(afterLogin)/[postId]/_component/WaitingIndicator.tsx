@@ -22,7 +22,7 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/waiting/${tableId}`
+        `https://ct-api.catchtable.co.kr/reservation-api/v1/waiting-shops/${tableId}?withTable=true&withWaitingsStatus=true&withPersonOption=false`,
       );
 
       if (!response.ok) {
@@ -30,7 +30,12 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
       }
 
       const result = await response.json();
-      const { operationInfo, totalTeamCount } = result;
+      const { operationInfo, totalTeamCount } = result.data.tableStatus || {};
+
+      if (!operationInfo) {
+        setMessage("현재 예약 불가능");
+        return;
+      }
 
       if (!operationInfo.isWaitingAvailable) {
         handleWaitingDisabled(operationInfo, totalTeamCount);
@@ -48,11 +53,14 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
 
   const handleWaitingDisabled = (
     operationInfo: { waitingDisabledReason: any },
-    totalTeamCount: SetStateAction<undefined>
+    totalTeamCount: SetStateAction<undefined>,
   ) => {
     const { waitingDisabledReason } = operationInfo;
 
-    if (waitingDisabledReason === "UNDER_AVAILABLE_TEAMS" || "BY_PASS") {
+    if (
+      waitingDisabledReason === "UNDER_AVAILABLE_TEAMS" ||
+      waitingDisabledReason === "BY_PASS"
+    ) {
       setTableData(totalTeamCount);
     } else {
       setMessage(waitingDisabledReason);
