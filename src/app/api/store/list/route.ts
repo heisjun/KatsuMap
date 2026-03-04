@@ -6,11 +6,14 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   noStore();
   const { searchParams } = new URL(req.url);
-  const userEmail = searchParams.get("user_email");
+  const rawUserEmail = searchParams.get("user_email");
+  const userEmail =
+    rawUserEmail && rawUserEmail !== "undefined" ? rawUserEmail : null;
   const order = searchParams.get("order");
-  const page = parseInt(searchParams.get("cursor") || "0");
+  const rawCursor = searchParams.get("cursor");
+  const page = rawCursor && rawCursor !== "undefined" ? parseInt(rawCursor) : 0;
   const limit = 8;
-  const offset = page * limit;
+  const offset = isNaN(page) ? 0 : page * limit;
   try {
     let data;
     if (order) {

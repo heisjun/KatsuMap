@@ -12,7 +12,7 @@ export const getStoreInfo: QueryFunction<
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/store/list?user_email=${user_email}&${urlSearchParams.toString()}&cursor=${pageParam}`,
+    }/api/store/list?user_email=${user_email || ""}&${urlSearchParams.toString()}&cursor=${pageParam}`,
     {
       next: {
         tags: ["posts", "search", user_email, searchParams.order].filter(
