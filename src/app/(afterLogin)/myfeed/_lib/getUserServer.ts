@@ -10,9 +10,9 @@ export const getUserServer = async ({
     {
       next: {
         tags: ["mypage", userId],
+        revalidate: 300,
       },
-      cache: "no-store",
-    }
+    },
   );
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.

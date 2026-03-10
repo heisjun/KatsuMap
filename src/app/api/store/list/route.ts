@@ -1,10 +1,8 @@
 import { KatsuInfo } from "@/app/_lib/definitions";
 import { sql } from "@vercel/postgres";
-import { unstable_noStore as noStore } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  noStore();
   const { searchParams } = new URL(req.url);
   const rawUserEmail = searchParams.get("user_email");
   const userEmail =

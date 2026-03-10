@@ -9,9 +9,9 @@ export const getStoreServer = async ({
     {
       next: {
         tags: ["store", postId],
+        revalidate: 60,
       },
-      cache: "no-store",
-    }
+    },
   );
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
