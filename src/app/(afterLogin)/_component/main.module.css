@@ -2,6 +2,12 @@
   display: grid;
   place-items: center;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px 24px; /* Row Gap: 40px, Column Gap: 24px */
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
   @media (max-width: 1000px) {
       grid-template-columns: 1fr 1fr;
   }
