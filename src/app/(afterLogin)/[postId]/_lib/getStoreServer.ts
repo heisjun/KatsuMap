@@ -1,25 +1,16 @@
+import { fetchClient } from "@/app/_lib/fetchClient";
+import { IStore } from "@/model/Store";
+
 export const getStoreServer = async ({
   queryKey,
 }: {
   queryKey: [string, string];
 }) => {
   const [_1, postId] = queryKey;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${postId}/meta`,
-    {
-      next: {
-        tags: ["store", postId],
-        revalidate: 60,
-      },
+  return fetchClient<IStore>(`/api/store/${postId}/meta`, {
+    next: {
+      tags: ["store", postId],
+      revalidate: 60,
     },
-  );
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
+  });
 };
