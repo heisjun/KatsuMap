@@ -103,7 +103,6 @@ export default function MarkerList() {
   }, [position]);
   
   const [selectedMarker, setSelectedMarker] = useState<number | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean[]>([]);
 
   // 지도 중심좌표 이동 감지 시 이동된 중심좌표로 설정
   const updateCenterWhenMapMoved = useMemo(
@@ -147,12 +146,8 @@ export default function MarkerList() {
     }
   }, []);
 
-  const handleToggleOpen = React.useCallback((index: number) => {
-    setIsOpen((prev) => {
-      const newIsActive = [...prev];
-      newIsActive[index] = !newIsActive[index];
-      return newIsActive;
-    });
+  const handleMarkerSelect = React.useCallback((index: number) => {
+    setSelectedMarker((prev) => (prev === index ? null : index)); // 이미 열려있으면 닫기, 아니면 열기
   }, []);
 
   return (
@@ -196,12 +191,18 @@ export default function MarkerList() {
                   }}
                   index={idx}
                   name={item.name}
-                  isOpen={!!isOpen[idx]}
+                  isOpen={selectedMarker === idx}
                   isSelected={selectedMarker === idx}
-                  onToggleOpen={handleToggleOpen}
+                  onToggleOpen={handleMarkerSelect}
                   onSelectMarker={setSelectedMarker}
                 />
-                {isOpen[idx] && <SwipeModal data={data} idx={idx} />}
+                {selectedMarker === idx && (
+                  <SwipeModal 
+                    data={data} 
+                    idx={idx} 
+                    onClose={() => handleMarkerSelect(idx)} 
+                  />
+                )}
               </Fragment>
             ))}
           </Map>

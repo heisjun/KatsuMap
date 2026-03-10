@@ -25,27 +25,36 @@ export function useScrapMutation({ postId, user_email, scrapId }: ScrapMutationP
       return res.json();
     },
     onMutate: async () => {
-      // 1. 진행 중인 쿼리가 있으면 취소하여 낙관적 업데이트가 덮어씌워지지 않도록 함
       await queryClient.cancelQueries({ queryKey: ["store"] });
 
-      // 2. 롤백을 위한 이전 쿼리들 스냅샷 저장 (어떤 쿼리키의 데이터가 어떻게 있었는지)
-      const previousStores = queryClient.getQueriesData<IKatsuInfo | IKatsuInfo[]>({
+      const previousStores = queryClient.getQueriesData<any>({
         queryKey: ["store"],
       });
 
-      // 3. 낙관적 업데이트 수행: 조건(store로 시작하는 모든 캐시)을 만족하는 모든 쿼리를 순회하며 업데이트
-      queryClient.setQueriesData<IKatsuInfo | IKatsuInfo[]>(
+      queryClient.setQueriesData<any>(
         { queryKey: ["store"] },
-        (oldData) => {
+        (oldData: any) => {
           if (!oldData) return oldData;
 
-          if (Array.isArray(oldData)) {
-            // [1] 리스트형 캐시 업데이트
-            return oldData.map((store) =>
+          // [1] Infinite Query 캐시 (KatsuList 등)
+          if (oldData.pages) {
+            return {
+              ...oldData,
+              pages: oldData.pages.map((page: IKatsuInfo[]) =>
+                page.map((store) =>
+                  store.post_id === postId ? { ...store, is_scrap: 1 } : store
+                )
+              ),
+            };
+          } 
+          // [2] 일반 배열 캐시 (MarkerList 등)
+          else if (Array.isArray(oldData)) {
+            return oldData.map((store: IKatsuInfo) =>
               store.post_id === postId ? { ...store, is_scrap: 1 } : store
             );
-          } else {
-            // [2] 단일 상세보기 캐시 업데이트
+          } 
+          // [3] 단일 상세보기 캐시 (상세 페이지 등)
+          else {
             if (oldData.post_id === postId) {
               return { ...oldData, is_scrap: 1 };
             }
@@ -54,15 +63,14 @@ export function useScrapMutation({ postId, user_email, scrapId }: ScrapMutationP
         }
       );
 
-      // Context에 이전 스냅샷 반환
       return { previousStores };
     },
-    // 에러 발생 시 onMutate에서 반환된 컨텍스트(스냅샷)를 통해 롤백 수행
     onError: (err, variables, context) => {
+      console.error(err);
       alert("오류가 발생했습니다!");
       if (context?.previousStores) {
-        context.previousStores.forEach(([queryKey, oldData]) => {
-          queryClient.setQueryData(queryKey, oldData);
+        context.previousStores.forEach(([queryKey, oldData]: [unknown, any]) => {
+          queryClient.setQueryData(queryKey as any, oldData);
         });
       }
     },
@@ -80,25 +88,40 @@ export function useScrapMutation({ postId, user_email, scrapId }: ScrapMutationP
         }
       );
       if (!res.ok) throw new Error("Unscrap failed");
-      return res.json();
+      if (res.status === 204) return null; // 204 No Content 방어 코드
+      return res.json().catch(() => null); // 빈 Body 파싱 에러 방어
     },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["store"] });
 
-      const previousStores = queryClient.getQueriesData<IKatsuInfo | IKatsuInfo[]>({
+      const previousStores = queryClient.getQueriesData<any>({
         queryKey: ["store"],
       });
 
-      queryClient.setQueriesData<IKatsuInfo | IKatsuInfo[]>(
+      queryClient.setQueriesData<any>(
         { queryKey: ["store"] },
-        (oldData) => {
+        (oldData: any) => {
           if (!oldData) return oldData;
 
-          if (Array.isArray(oldData)) {
-            return oldData.map((store) =>
+          // [1] Infinite Query 캐시
+          if (oldData.pages) {
+            return {
+              ...oldData,
+              pages: oldData.pages.map((page: IKatsuInfo[]) =>
+                page.map((store) =>
+                  store.post_id === postId ? { ...store, is_scrap: 0 } : store
+                )
+              ),
+            };
+          } 
+          // [2] 일반 배열 캐시
+          else if (Array.isArray(oldData)) {
+            return oldData.map((store: IKatsuInfo) =>
               store.post_id === postId ? { ...store, is_scrap: 0 } : store
             );
-          } else {
+          } 
+          // [3] 단일 상세보기 캐시
+          else {
             if (oldData.post_id === postId) {
               return { ...oldData, is_scrap: 0 };
             }
@@ -110,10 +133,11 @@ export function useScrapMutation({ postId, user_email, scrapId }: ScrapMutationP
       return { previousStores };
     },
     onError: (err, variables, context) => {
+      console.error(err);
       alert("오류가 발생했습니다!");
       if (context?.previousStores) {
-        context.previousStores.forEach(([queryKey, oldData]) => {
-          queryClient.setQueryData(queryKey, oldData);
+        context.previousStores.forEach(([queryKey, oldData]: [unknown, any]) => {
+          queryClient.setQueryData(queryKey as any, oldData);
         });
       }
     },

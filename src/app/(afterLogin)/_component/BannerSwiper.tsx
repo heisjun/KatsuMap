@@ -14,6 +14,7 @@ interface Props {
 export default function BannerSwiper({ infos }: Props) {
   return (
     <Swiper
+      style={{ width: "100%", height: "100%" }}
       modules={[Pagination, Navigation]}
       navigation
       spaceBetween={20} // 슬라이스 사이 간격
@@ -33,14 +34,14 @@ export default function BannerSwiper({ infos }: Props) {
     >
       {infos.map((ele, idx) => (
         <SwiperSlide key={idx}>
-          <Link href={ele.goto}>
+          <Link href={ele.goto} style={{ display: "block", width: "100%" }}>
             <div className={styles.swipeBlock}>
               <Image
-                src={ele.banner} // 이미지 경로
-                className={styles.swiperImg} // 기존 스타일 클래스
-                alt="돈가스 이미지" // alt 텍스트
-                width={800} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
-                height={350} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+                src={ele.banner}
+                className={styles.swiperImg}
+                alt="돈가스 배너 이미지"
+                fill /* 부모(.swipeBlock) 크기를 꽉 채웁니다 */
+                sizes="(max-width: 600px) 100vw, (max-width: 1000px) 100vw, 800px"
                 priority
               />
             </div>

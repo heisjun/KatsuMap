@@ -23,11 +23,11 @@ export default function ImgSwiper({ images, singleImage }: Props) {
           <SwiperSlide key={idx}>
             <div className={styles.swipeBlock}>
               <Image
-                src={image} // 이미지 경로
-                className={styles.swiperImg} // 기존 스타일 클래스
-                alt="돈가스 이미지" // alt 텍스트
-                width={400} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
-                height={400} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+                src={image}
+                className={styles.swiperImg}
+                alt="돈가스 썸네일"
+                fill
+                sizes="(max-width: 600px) 100vw, 400px"
               />
             </div>
           </SwiperSlide>
@@ -57,11 +57,11 @@ export default function ImgSwiper({ images, singleImage }: Props) {
           <SwiperSlide key={idx}>
             <div className={styles.swipeBlock}>
               <Image
-                src={image} // 이미지 경로
-                className={styles.swiperImg} // 기존 스타일 클래스
-                alt="돈가스 이미지" // alt 텍스트
-                width={400} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
-                height={400} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+                src={image}
+                className={styles.swiperImg}
+                alt="돈가스 썸네일"
+                fill
+                sizes="(max-width: 1000px) 50vw, 33vw"
               />
             </div>
           </SwiperSlide>

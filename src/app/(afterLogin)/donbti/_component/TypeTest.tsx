@@ -39,6 +39,7 @@ const TypeTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState<Score>({ 경양식: 0, 일식: 0, 퓨전: 0 });
   const [finished, setFinished] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false); // 분석 중 상태 추가
   const [restaurantInfo, setRestaurantInfo] = useState<KatsuInfo | null>(null);
   const [myType, setMyType] = useState("");
   const router = useRouter();
@@ -58,11 +59,12 @@ const TypeTest = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setFinished(true);
-      fetchRestaurantInfo();
+      fetchRestaurantInfo(); // 여기서 분석 딜레이 시작
     }
   };
 
   const fetchRestaurantInfo = async () => {
+    setIsAnalyzing(true); // 두구두구 애니메이션 활성화
     const maxType = Object.keys(score).reduce((a, b) =>
       score[a as keyof typeof score] > score[b as keyof typeof score] ? a : b
     );
@@ -80,10 +82,19 @@ const TypeTest = () => {
         `/api/store/info?name=${selectedRestaurant}`
       );
       const data: KatsuInfo = await response.json();
-      setRestaurantInfo(data);
+      
+      // 최소 1.5초간 대기하여 유저에게 긴장감(Suspense)을 선사함
+      setTimeout(() => {
+        setRestaurantInfo(data);
+        setIsAnalyzing(false);
+      }, 1500);
+
     } catch (error) {
       console.error("Error fetching restaurant info:", error);
-      setRestaurantInfo(null);
+      setTimeout(() => {
+        setRestaurantInfo(null);
+        setIsAnalyzing(false);
+      }, 1500);
     }
   };
 
@@ -98,33 +109,43 @@ const TypeTest = () => {
   }
 
   const getResult = () => {
-    if (!restaurantInfo) {
-      return "두구두구";
+    if (isAnalyzing || !restaurantInfo) {
+      return (
+        <div className={styles.suspenseContainer}>
+            <div className={styles.suspenseText}>두구두구두구...!</div>
+            <div className={styles.suspenseSub}>취향을 분석하고 있습니다 🔍</div>
+        </div>
+      );
     }
     return (
-      <div>
+      <div className={styles.resultWrapper}>
         <div className={styles.recommandSpan}>
           <div className={styles.span1}>당신에게 추천하는 돈가스는?</div>
           <div className={styles.span2}>
-            {convertType(myType)?.split("!")[0]}
+            {convertType(myType)?.split("!")[0]}!
           </div>
-          <div className={styles.span2}>
+          <div className={styles.span2} style={{ fontSize: '20px', color: '#4b5563', marginTop: '4px' }}>
             {convertType(myType)?.split("!")[1]}
           </div>
         </div>
+
         <div className={styles.imageBlock}>
           <Image
             src={restaurantInfo.image_url} // 이미지 경로
             className={styles.storeImage} // 기존 스타일 클래스
-            alt="돈가스 이미지" // alt 텍스트
-            width={400} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
-            height={400} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+            alt="돈가스 썸네일" // alt 텍스트
+            fill // 반응형 꽉참
+            sizes="(max-width: 600px) 100vw, 400px"
             priority
           />
         </div>
-        <div className={styles.storeTitle}>{restaurantInfo.name}</div>
-        <div className={styles.storeName}>{restaurantInfo.title}</div>
-        <div className={styles.storeLocation}>{restaurantInfo.address}</div>
+
+        <div className={styles.storeTextContainer}>
+            <div className={styles.storeTitle}>{restaurantInfo.name}</div>
+            <div className={styles.storeName}>{restaurantInfo.title}</div>
+            <div className={styles.storeLocation}>{restaurantInfo.address}</div>
+        </div>
+        
         <button
           onClick={() => onGoInfo(restaurantInfo.post_id)}
           className={styles.storeBtn}
@@ -143,13 +164,11 @@ const TypeTest = () => {
       <div className={styles.progressbarContainer}>
         <div
           className={styles.progressBar}
-          style={{
-            width: `${progressPercentage}%`,
-          }}
+          style={{ width: `${finished ? 100 : progressPercentage}%` }}
         />
       </div>
       {!finished ? (
-        <div>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h2 className={styles.question}>
             {questions[currentQuestion].question}
           </h2>
@@ -168,7 +187,9 @@ const TypeTest = () => {
           </div>
         </div>
       ) : (
-        <h2>{getResult()}</h2>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            {getResult()}
+        </div>
       )}
     </div>
   );

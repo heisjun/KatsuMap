@@ -1,141 +1,175 @@
-.detailContainer{
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 50px;
+.detailContainer {
+  padding: 0 15px 50px 15px;
+  max-width: 1000px;
+  margin: 0 auto; /* Center content on wide screens */
 }
-.detailImg{
-    width: 500px;
-    height: 500px;
+
+.detailImg {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 트렌디한 이미지 섀도우 */
 }
-.detailHeader{
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   @media (max-width: 600px) {
+
+/* Header Area */
+.detailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  @media (max-width: 600px) {
     flex-direction: column;
-    align-items: first baseline;
-}
-}
-.refreshBtn{
-    margin-left: 20px;
-    background-color: RGB(255, 61, 0);
-    border: none;
-    color: white;
-    padding: 0px 5px;
-    height: 30px;
+    align-items: flex-start;
+  }
 }
 
-.detailTitle{
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: black;
-    @media (max-width: 600px) {
-        font-size: 24px;
-    }
+.detailTitle {
+  font-size: 32px;
+  font-weight: 800; /* Extra bold for modern look */
+  padding-bottom: 20px;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+  @media (max-width: 600px) {
+    font-size: 26px;
+  }
 }
 
-.infoContainer{
-    display: flex;
+.refreshBtn {
+  margin-left: 20px;
+  background-color: #ff4714; /* Slightly more vibrant coral/orange */
+  border: none;
+  border-radius: 8px; /* 둥근 테두리 */
+  color: white;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  @media (max-width: 600px) {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+.refreshBtn:hover {
+  background-color: #e63e0e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 71, 20, 0.2);
+}
+
+/* Card Container */
+.infoContainer {
+  display: flex;
+  width: 100%;
+  margin: 30px 0;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px; /* 카드형 둥근 모서리 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04); /* 은은한 붕 뜬 느낌 */
+  border: 1px solid #f0f0f0;
+  @media (max-width: 700px) {
+    flex-direction: column;
+    padding: 24px 20px;
+    margin: 20px 0;
+  }
+}
+
+/* Left Section: Info */
+.infoBlockLeft {
+  width: 50%;
+  border-right: 1px solid #efefef;
+  padding-right: 30px;
+  @media (max-width: 700px) {
     width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    box-sizing: border-box;
-    padding: 20px 23px 20px 23px;
-    background-color: #f8f8f8;
-    @media (max-width: 700px) {
-        display:block;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
+    border-right: none;
+    padding-right: 0px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #efefef;
+  }
 }
 
-.infoBlockLeft{
-    width: 50%;
-    border-right: 1px solid #ececec;
-    padding-right: 26px;
-    @media (max-width: 700px) {
-        width: 100%;
-        border-right: none;
-        padding-right: 0px;
-        padding-bottom: 0px;
-        border-bottom: 1px solid #ececec;;
-    }
+.storeName {
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
-.storeName{
-    margin: 0 0px 6px 0;
-    font-size: 24px;
-    font-weight: bold;
-    color: black;
+.storeExplain {
+  font-size: 15px;
+  line-height: 1.7; /* 줄간격 확대해 가독성 UP */
+  color: #555555;
 }
 
-.storeExplain{
-    margin: 22px 0px 49px 0;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.56;
-    letter-spacing: normal;
-    color: #2e2e2e;
+/* Right Section: Details */
+.infoBlockRight {
+  width: 50%;
+  padding-left: 30px;
+  @media (max-width: 700px) {
+    width: 100%;
+    padding-left: 0px;
+    padding-top: 24px;
+  }
 }
 
-.infoBlockRight{
-    width: 50%;
-    padding-left: 26px;
-    @media (max-width: 700px) {
-        width: 100%;
-        padding-left: 0px;
-        padding-top: 26px;
-    }
+.infoAdress {
+  font-size: 14px;
+  font-weight: 700;
+  color: #a0a0a0;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase; /* 영어 텍스트를 쓸 경우를 대비 */
 }
 
-.infoAdress{
-    font-family: NotoSansKR;
-    font-size: 15px;
-    font-weight: bold;
-    color: #272727;
+.addressContent {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 24px;
+  line-height: 1.5;
 }
 
-.addressContent{
-    margin: 8px 0 26px;
-    font-family: NotoSansKR;
-    font-size: 16px;
-    color: #272727;
+/* Menu Grid / Flex */
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap; /* 카드가 넘어갈 경우 자동 줄바꿈 */
+  gap: 12px; /* 간편한 카드 간격 조절 */
+  margin-bottom: 28px;
 }
 
-.flexContainer{
-    display: flex;
-    align-items: center;
-    margin-bottom: 26px;
+.category {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 18px;
+  background-color: #f8f9fa; /* 미세한 연회색 배경 */
+  border-radius: 10px; /* 세련된 태그 느낌 */
+  transition: transform 0.2s ease;
+  min-width: 130px;
+  border: 1px solid #eee;
 }
 
-.category{
-    width: 160px;
-    height: 66px;
-    margin: 10px 4px 0 0;
-    padding: 11px 22px 10px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.02);
-    background-color: #fff;
+.category:hover {
+  transform: translateY(-2px);
+  background-color: #f1f3f5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.menuName{
-    margin-bottom: 6px;
-    text-align: center;
-    font-family: NotoSansKR;
-    font-size: 13px;
-    font-weight: 500;
-    color: #989898;
+.menuName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #777777;
+  margin-bottom: 4px;
 }
 
-.menuPrice{
-    margin: 6px 0 0;
-    font-family: NotoSansKR;
-    font-size: 14px;
-    text-align: center;
-    color: #272727;
+.menuPrice {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* 추가 속성: 휴무일 강조용 스타일 */
+.closedHighlight {
+  color: #e03131 !important;
+  font-weight: 700 !important;
 }

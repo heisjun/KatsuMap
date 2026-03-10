@@ -32,6 +32,7 @@ export default function KatsuInfo({ info }: Props) {
   });
 
   const onClickScrap: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     if (session.data === null) {
       router.push("/loginform");
@@ -47,21 +48,26 @@ export default function KatsuInfo({ info }: Props) {
     <KatsuArticle post={target}>
       <div className={styles.imageBlock}>
         <Image
-          src={info.image_url} // 이미지 경로
-          className={styles.storeImage} // 기존 스타일 클래스
-          alt="돈가스 이미지" // alt 텍스트
-          width={350} // 이미지의 고정 너비 또는 원본 크기에 맞는 너비 값 (필수)
-          height={350} // 이미지의 고정 높이 또는 원본 크기에 맞는 높이 값 (필수)
+          src={info.image_url}
+          className={styles.storeImage}
+          alt="돈가스 썸네일"
+          fill
+          sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"
           priority
         />
 
-        <div className={styles.storeBookMark} onClick={onClickScrap}>
+        <div
+          className={`${styles.storeBookMark} ${info.is_scrap === 1 ? styles.scrapFilled : ""}`}
+          onClick={onClickScrap}
+        >
           {info.is_scrap === 1 ? <BsBookmarkFill /> : <BsBookmark />}
         </div>
       </div>
-      <div className={styles.storeTitle}>{info.name}</div>
-      <div className={styles.storeName}>{info.title}</div>
-      <div className={styles.storeLocation}>{info.address}</div>
+      <div className={styles.textContainer}>
+        <div className={styles.storeTitle}>{info.name}</div>
+        <div className={styles.storeName}>{info.title}</div>
+        <div className={styles.storeLocation}>{info.address}</div>
+      </div>
     </KatsuArticle>
   );
 }

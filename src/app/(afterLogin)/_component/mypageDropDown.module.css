@@ -1,4 +1,4 @@
-.filtersBlock{
+.filtersBlock {
     display: flex;
     padding-left: 50px;
 }
@@ -10,45 +10,61 @@
 }
 
 .dropDownBtn {
-    background: #fff;
-    border: 1px solid lightgrey;
-    height: 40px;
-    width: 40px;
-    color: gray;
-    border-radius: 100%;
+    background: #ffffff;
+    border: none;
+    height: 44px;
+    width: 44px;
+    color: #4b5563; /* 약간 부드러운 다크 그레이 */
+    border-radius: 50%; /* 완전한 원형 */
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     font-size: 15px;
-
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 버튼 자체 은은한 그림자 */
+    transition: all 0.2s ease;
+    object-fit: cover; /* 아바타 이미지 안 깨지게 */
 }
 
-.dropDownBtn:hover{
-    background-color: gray;
-    color: white;
+.dropDownBtn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
 }
 
-.dropDownContent{
+.dropDownContent {
     position: absolute;
-    top: 130%;
-    right: -200%;
-    background: #fff;
-    border: 1px solid lightgrey;
-    font-weight: 300;
-    color: #333;
-    width: 150px;
-    z-index: 10;
-    font-size: 15px;
-}
-
-.contentItem{
-    font-weight: 400;
-    padding: 15px;
-    cursor: pointer;
-    transition: all 0.2s;
+    top: calc(100% + 12px); /* 버튼 아래 간격 띄움 */
+    right: 0; /* 우측 정렬 */
+    background: #ffffff;
+    border: none; /* 기존 투박한 border 제거 */
+    border-radius: 16px; /* 모던한 라운드 */
+    font-weight: 500;
+    color: #374151; /* 진한 회색 텍스트 */
+    width: 160px;
     z-index: 100;
+    font-size: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* 팝업 섀도우 */
+    overflow: hidden; /* 자식 item 호버 시 라운드 튀어나가는것 방지 */
+    animation: dropdownFade 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    padding: 8px 0; /* 상하 여백 */
 }
 
-.contentItem:hover{
-    background: lightgray;
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.contentItem {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    color: #4b5563;
+}
+
+.contentItem:hover {
+    background: #f3f4f6; /* 아주 옅고 세련된 회색 호버 */
+    color: #ff4714; /* 주요 KatsuMap 색상으로 텍스트 호버 하이라이트 */
+    font-weight: 600;
 }
