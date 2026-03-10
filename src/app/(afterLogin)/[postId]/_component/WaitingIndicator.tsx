@@ -30,7 +30,12 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
       }
 
       const result = await response.json();
-      const { operationInfo, totalTeamCount } = result;
+      const { operationInfo, totalTeamCount } = result.data?.tableStatus || {};
+
+      if (!operationInfo) {
+        setMessage("현재 예약 불가능");
+        return;
+      }
 
       if (!operationInfo.isWaitingAvailable) {
         handleWaitingDisabled(operationInfo, totalTeamCount);
@@ -38,6 +43,7 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
         setTableData(totalTeamCount);
       }
     } catch (error) {
+      console.error(error);
       setMessage("다시 시도하세요");
     }
   };
@@ -52,7 +58,10 @@ export default function WaitingIndicator({ tableId, engName }: Props) {
   ) => {
     const { waitingDisabledReason } = operationInfo;
 
-    if (waitingDisabledReason === "UNDER_AVAILABLE_TEAMS" || "BY_PASS") {
+    if (
+      waitingDisabledReason === "UNDER_AVAILABLE_TEAMS" ||
+      waitingDisabledReason === "BY_PASS"
+    ) {
       setTableData(totalTeamCount);
     } else {
       setMessage(waitingDisabledReason);
