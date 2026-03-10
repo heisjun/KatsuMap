@@ -8,7 +8,7 @@ import { IKatsuInfo } from "@/model/KatsuInfo";
 import { CustomOverlayMap, MapMarker, useMap } from "react-kakao-maps-sdk";
 import { Map } from "react-kakao-maps-sdk";
 import useGeolocation from "../../_component/useGeolocation";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
 import SwipeModal from "./SwipeModal";
@@ -22,6 +22,58 @@ interface LatLng {
 type Props = {
   searchParams: { order: string };
 };
+// EventMarkerContainer를 컴포넌트 외부로 분리하여 불필요한 재생성을 방지합니다.
+const EventMarkerContainer = React.memo(({ 
+  position, 
+  index, 
+  name, 
+  isOpen, 
+  isSelected,
+  onToggleOpen,
+  onSelectMarker
+}: {
+  position: LatLng;
+  index: number;
+  name: string;
+  isOpen: boolean;
+  isSelected: boolean;
+  onToggleOpen: (index: number) => void;
+  onSelectMarker: (index: number) => void;
+}) => {
+  const map = useMap();
+
+  return (
+    <>
+      <MapMarker
+        position={position}
+        onClick={(marker) => {
+          map.panTo(marker.getPosition());
+          onToggleOpen(index);
+          onSelectMarker(index);
+        }}
+        image={{
+          src: isSelected
+            ? "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"
+            : "https://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png",
+          size: { width: 24, height: 35 },
+        }}
+      ></MapMarker>
+      <CustomOverlayMap
+        position={{
+          lat: Number(position.lat),
+          lng: Number(position.lng),
+        }}
+        yAnchor={0}
+      >
+        <div className={styles.infoWrapper}>
+          <span className={styles.storeName}>{name}</span>
+        </div>
+      </CustomOverlayMap>
+    </>
+  );
+});
+EventMarkerContainer.displayName = "EventMarkerContainer";
+
 export default function MarkerList() {
   const session = useSession();
   const user_email = session.data?.user?.email as string;
@@ -46,12 +98,12 @@ export default function MarkerList() {
     lng: 126.570667,
   });
 
-  const setCenterToMyPosition = () => {
+  const setCenterToMyPosition = React.useCallback(() => {
     setCenter(position);
-  };
+  }, [position]);
+  
   const [selectedMarker, setSelectedMarker] = useState<number | null>(null);
-
-  const [isOpen, setIsOpen] = useState([false]);
+  const [isOpen, setIsOpen] = useState<boolean[]>([]);
 
   // 지도 중심좌표 이동 감지 시 이동된 중심좌표로 설정
   const updateCenterWhenMapMoved = useMemo(
@@ -71,16 +123,18 @@ export default function MarkerList() {
       setCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude });
     });
 
-    navigator.geolocation.watchPosition((pos) => {
+    const watchId = navigator.geolocation.watchPosition((pos) => {
       setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude });
     });
+    
+    return () => navigator.geolocation.clearWatch(watchId); // 클린업 로직 추가
   }, []);
 
   const mapRef = useRef<kakao.maps.Map>(null);
   const defaultLevel = 3;
   const [level, setLevel] = useState(defaultLevel);
 
-  const handleLevel = (type: "increase" | "decrease") => {
+  const handleLevel = React.useCallback((type: "increase" | "decrease") => {
     const map = mapRef.current;
     if (!map) return;
 
@@ -88,61 +142,18 @@ export default function MarkerList() {
       map.setLevel(map.getLevel() + 1);
       setLevel(map.getLevel());
     } else {
-      type === "decrease";
       map.setLevel(map.getLevel() - 1);
       setLevel(map.getLevel());
     }
-  };
+  }, []);
 
-  const EventMarkerContainer = ({ position, index, name }: any) => {
-    const map = useMap();
-
-    function onOpenBtn(index: number) {
-      const newIsActive = [];
-      newIsActive[index] = true;
-      setIsOpen(newIsActive);
-    }
-
-    function onCloseBtn(index: number) {
-      const newIsActive = [...isOpen];
-      newIsActive[index] = false;
-      setIsOpen(newIsActive);
-    }
-
-    const isSelected = selectedMarker === index;
-
-    return (
-      <>
-        <MapMarker
-          position={position} // 마커를 표시할 위치
-          onClick={(marker) => {
-            map.panTo(marker.getPosition());
-            isOpen[index] ? onCloseBtn(index) : onOpenBtn(index);
-            setSelectedMarker(index);
-          }}
-          image={{
-            src: isSelected
-              ? "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"
-              : "https://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png",
-            size: { width: 24, height: 35 },
-          }}
-        ></MapMarker>
-        <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-          // 커스텀 오버레이가 표시될 위치입니다
-          position={{
-            lat: Number(position.lat),
-            lng: Number(position.lng),
-          }}
-          yAnchor={0}
-        >
-          {/* 커스텀 오버레이에 표시할 내용입니다 */}
-          <div className={styles.infoWrapper}>
-            <span className={styles.storeName}>{name}</span>
-          </div>
-        </CustomOverlayMap>
-      </>
-    );
-  };
+  const handleToggleOpen = React.useCallback((index: number) => {
+    setIsOpen((prev) => {
+      const newIsActive = [...prev];
+      newIsActive[index] = !newIsActive[index];
+      return newIsActive;
+    });
+  }, []);
 
   return (
     <div className={styles.mainWrapper}>
@@ -182,9 +193,13 @@ export default function MarkerList() {
                   position={{
                     lat: Number(item.lat),
                     lng: Number(item.lng),
-                  }} // 마커를 표시할 위치
+                  }}
                   index={idx}
                   name={item.name}
+                  isOpen={!!isOpen[idx]}
+                  isSelected={selectedMarker === idx}
+                  onToggleOpen={handleToggleOpen}
+                  onSelectMarker={setSelectedMarker}
                 />
                 {isOpen[idx] && <SwipeModal data={data} idx={idx} />}
               </Fragment>
