@@ -7,6 +7,8 @@ import BasicMap from "../../_component/Map";
 import styles from "./katsuDetail.module.css";
 import ImgSwiper from "./imgSwiper";
 import WaitingIndicator from "./WaitingIndicator";
+import DetailInfo from "./DetailInfo";
+import DetailMenu from "./DetailMenu";
 
 interface Props {
   postId: string;
@@ -42,38 +44,8 @@ export default function KatsuDetail({ postId }: Props) {
 
       <ImgSwiper images={store.image_urls} />
       <div className={styles.infoContainer}>
-        <div className={styles.infoBlockLeft}>
-          <div className={styles.storeName}>{store.name}</div>
-          {store.explain.split("<br>").map((content, idx) => (
-            <div key={idx}>
-              <span className={styles.storeExplain}>{content}</span>
-              <br />
-              <br />
-            </div>
-          ))}
-        </div>
-        <div className={styles.infoBlockRight}>
-          <div className={styles.infoAdress}>주소</div>
-          <div className={styles.addressContent}>{store.address}</div>
-          <div className={styles.infoAdress}>메뉴</div>
-          <div className={styles.flexContainer}>
-            {store.menu
-              .split(",")
-              .map((menuInfo) => menuInfo.split(" "))
-              .map((ele, idx) => (
-                <div className={styles.category} key={idx}>
-                  <div className={styles.menuName}>{ele[0]}</div>
-                  <div className={styles.menuPrice}>{ele[1]}</div>
-                </div>
-              ))}
-          </div>
-          <div className={styles.infoAdress}> 영업시간</div>
-          {store.time.split("/").map((info, idx) => (
-            <div key={idx}>
-              <div className={styles.addressContent}>{info}</div>
-            </div>
-          ))}
-        </div>
+        <DetailInfo storeName={store.name} explain={store.explain} />
+        <DetailMenu address={store.address} menuString={store.menu} timeString={store.time} />
       </div>
       <BasicMap store={store} />
     </div>
