@@ -1,13 +1,26 @@
-.swiperImg{
-
-    width: 100%;
-    height: auto;
-    object-fit: cover 
+.swiperImg {
+  width: 100%;
+  height: 100%; /* 부모의 크기를 꽉 채우도록 변경 */
+  object-fit: cover;
+  border-radius: 12px; /* 추가적인 트렌디함 */
 }
 
-.swipeBlock{
-    position: relative;
-    width: 100%;
-    height: auto;
+.swipeBlock {
+  position: relative;
+  width: 100%;
+  height: 350px; /* PC 환경에서의 고정 높이 */
+  border-radius: 12px;
+  overflow: hidden; /* 모서리 둥글게 적용되도록 자르기 */
 }
 
+/* 모바일 화면에서는 배너 높이를 적절히 줄여줌 */
+@media (max-width: 600px) {
+  .swipeBlock {
+    height: 200px; 
+  }
+}
+@media (min-width: 601px) and (max-width: 1000px) {
+  .swipeBlock {
+    height: 280px; 
+  }
+}

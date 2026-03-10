@@ -25,12 +25,17 @@ export default function DetailMenu({ address, menuString, timeString }: Props) {
           ))}
       </div>
 
-      <div className={styles.infoAdress}> 영업시간</div>
-      {timeString.split("/").map((info, idx) => (
-        <div key={idx}>
-          <div className={styles.addressContent}>{info}</div>
-        </div>
-      ))}
+      <div className={styles.infoAdress}>영업시간</div>
+      {timeString.split("/").map((info, idx) => {
+        const isClosed = info.includes("휴무") || info.includes("쉬는") || info.includes("휴일") || info.includes("Off");
+        return (
+          <div key={idx}>
+            <div className={`${styles.addressContent} ${isClosed ? styles.closedHighlight : ""}`}>
+              {info}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

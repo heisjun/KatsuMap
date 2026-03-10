@@ -10,11 +10,11 @@ export default function DetailInfo({ storeName, explain }: Props) {
     <div className={styles.infoBlockLeft}>
       <div className={styles.storeName}>{storeName}</div>
       {explain.split("<br>").map((content, idx) => (
-        <div key={idx}>
-          <span className={styles.storeExplain}>{content}</span>
+        <p key={idx} className={styles.storeExplain}>
+          {content}
           <br />
           <br />
-        </div>
+        </p>
       ))}
     </div>
   );
