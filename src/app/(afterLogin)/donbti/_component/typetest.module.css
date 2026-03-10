@@ -1,129 +1,220 @@
-.selectContainer{
+.selectContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 16px;
+    padding: 24px 16px;
 }
 
-.selectBtn{
+.progressbarContainer {
     width: 100%;
-    max-width: 400px;
-    height: 80px;
-    padding: 0px 20px;
-    margin-bottom: 20px;
-    background-color: white;
-    border: 1px solid black;
-    color: black;
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-
-}
-
-.selectBtn:hover{
-}
-.selectBlock{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.question{
-    margin-bottom: 30px;
-    color: #D4A373;
-    @media (max-width: 500px) {
-        font-size: 20px;
-    }
-}
-
-.recommandSpan{
-    color: black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.span1{
-    font-size: 24px;
-    font-weight: 400;
-    margin-bottom: 10px;
-}
-
-.span2{
-    font-size: 29px;
-    font-weight: bold;
-    color: #333333;
-
-}
-
-.imageBlock{
-    position: relative;
-    width: 300px;
-    height: 300px;
-    cursor: pointer;
-}
-.storeImage{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    border-radius: 10px;
-    object-fit: cover;
-
-
-}
-.storeTitle{
-    font-size: 24px;
-    font-weight: bold;
-    display: flex;
-    padding-top: 10px;
-    color: black;
-   
-}
-
-
-.storeName{
-    font-size: 16px;
-    font-weight: 500;
-    color: black;
-}
-.storeLocation{
-    font-size: 16px;
-    font-weight: 500;
-    color: black;
-}
-
-.storeBtn{
-    margin-top: 20px;
-    width: 100%;
-    height: 45px;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #D4A373;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.storeBtn:hover{
-    opacity: 0.8;
-}
-
-.progressbarContainer{
-    width: 100%;
-    background-color: #e0e0e0;
-    height: 10px;
-    border-radius: 5px;
-    margin: 20px 0;
+    background-color: #f3f4f6;
+    height: 12px;
+    border-radius: 6px;
+    margin: 10px 0 40px 0;
+    overflow: hidden;
 }
 
 .progressBar {
-    background-color: #D4A373;
+    background-color: #ff4714; /* KatsuMap 메인 브랜드 오렌지 */
     height: 100%;
-    border-radius: 5px;
-    transition: width 0.5s ease-in-out; /* This adds the smooth animation */
-  }
+    border-radius: 6px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* 부드러운 가속 애니메이션 */
+}
+
+.question {
+    margin-bottom: 40px;
+    color: #ff4714;
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.4;
+    @media (max-width: 500px) {
+        font-size: 22px;
+    }
+}
+
+.selectBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; /* 버튼 사이 간격 */
+    width: 100%;
+}
+
+.selectBtn {
+    width: 100%;
+    max-width: 480px;
+    min-height: 80px;
+    padding: 16px 24px;
+    background-color: #ffffff;
+    border: 2px solid transparent;
+    color: #374151;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.selectBtn:hover {
+    background-color: #fff1ed; /* 아주 연한 오렌지 배경 */
+    border-color: #ff4714;
+    color: #ff4714;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 71, 20, 0.15);
+}
+
+/* --- 로딩(Suspense) 애니메이션 파트 --- */
+.suspenseContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+.suspenseText {
+    font-size: 32px;
+    font-weight: 800;
+    color: #ff4714;
+    letter-spacing: 2px;
+    animation: bounce 0.8s infinite alternate;
+}
+
+.suspenseSub {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #6b7280;
+    font-weight: 500;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* --- 결과 렌더링 카드 파트 --- */
+.resultWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    padding: 32px 24px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 480px;
+    animation: fadeUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.recommandSpan {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.span1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.span2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ff4714;
+    line-height: 1.3;
+}
+
+.imageBlock {
+    position: relative;
+    width: 100%;
+    padding-bottom: 80%; /* 약간의 직사각형 폼 */
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.storeImage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.imageBlock:hover .storeImage {
+    transform: scale(1.05); /* 호버 액션 추가 */
+}
+
+/* 텍스트 영역 좌측 정렬 및 계층화 */
+.storeTextContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 8px;
+    margin-bottom: 24px;
+}
+
+.storeTitle {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.storeName {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 6px;
+}
+
+.storeLocation {
+    font-size: 14px;
+    font-weight: 500;
+    color: #9ca3af;
+}
+
+.storeBtn {
+    width: 100%;
+    height: 52px;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    background-color: #ff4714; /* 코랄 브랜드 컬러 포인트 */
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 71, 20, 0.3);
+    transition: all 0.2s ease;
+}
+
+.storeBtn:hover {
+    background-color: #e63f11;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 71, 20, 0.4);
+}
