@@ -1,3 +1,5 @@
+import { fetchClient } from "@/app/_lib/fetchClient";
+
 export const getUserServer = async ({
   queryKey,
 }: {
@@ -5,22 +7,11 @@ export const getUserServer = async ({
 }) => {
   const [_1, userId] = queryKey;
   if (!userId) return null;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/mypage/${userId}/username`,
-    {
-      next: {
-        tags: ["mypage", userId],
-        revalidate: 300,
-      },
+  
+  return fetchClient<any>(`/api/mypage/${userId}/username`, {
+    next: {
+      tags: ["mypage", userId],
+      revalidate: 300,
     },
-  );
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
+  });
 };
