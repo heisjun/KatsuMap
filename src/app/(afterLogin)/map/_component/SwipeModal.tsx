@@ -11,84 +11,66 @@ import ImgSwiper from "../../[postId]/_component/imgSwiper";
 interface Props {
   data: IKatsuInfo[];
   idx: number;
+  onClose: () => void;
 }
 
-export default function SwipeModal({ data, idx }: Props) {
-  const [{ y, height }, setY] = useSpring(() => ({ y: 350, height: 500 }));
-  const [{ x }, setX] = useSpring(() => ({ x: 0 }));
-  const [onTop, setOnTop] = useState<boolean>(false);
-
-  const [isWidthLessThan500, setIsWidthLessThan500] = useState(
-    window.innerWidth <= 500
-  );
+export default function SwipeModal({ data, idx, onClose }: Props) {
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsWidthLessThan500(window.innerWidth <= 500);
-    };
-
+    const handleResize = () => setIsMobile(window.innerWidth <= 500);
+    handleResize(); // 초기화
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // 모바일 Bottom Sheet용 애니메이션 (y축 바인딩)
+  const [{ y }, setY] = useSpring(() => ({ y: 0 }));
+
   const bindY = useDrag(
-    ({ down, movement: [, my], direction: [, dy], cancel }) => {
-      const viewportHeight = window.innerHeight;
-      if (dy > 0 && my > 100 && !down) {
-        // 모달을 화면 아래로 이동시켜 닫기
-        setY({ y: viewportHeight, height: viewportHeight - 100 });
-        setOnTop(false);
-      } else if (dy < 0 && -my > 100 && !down) {
-        setY({ y: 0, height: viewportHeight - 100 });
-        setOnTop(true);
+    ({ down, movement: [, my] }) => {
+      // 위로 드래그하는 건 막음 (my < 0일 땐 0으로 고정)
+      if (my < 0) my = 0;
+
+      // 아래로 충분히 스와이프했을 때 모달 닫기 애니메이션
+      if (!down && my > 150) {
+        setY({ y: window.innerHeight }); // 화면 밖으로 밀어냄
+        setTimeout(() => onClose(), 250); // 부모 쪽에서 언마운트
       } else {
-        // 드래그 중일 때, y값과 높이를 설정
-        setY({
-          y: down ? my : 0,
-          height: down ? height.get() : viewportHeight - 100,
-        });
-        setOnTop(true);
+        // 드래그 중이거나 스와이프가 부족하면 원래 자리로 복귀
+        setY({ y: down ? my : 0 });
       }
     },
-    { axis: "y" }
+    { axis: "y" },
   );
-
-  const bindX = useDrag(
-    ({ down, movement: [mx] }) => {
-      setX({ x: down ? mx : mx > 100 ? 350 : 0 });
-    },
-    { axis: "x" }
-  );
-
-  const onCloseModal = () => {
-    if (onTop) {
-      const viewportHeight = window.innerHeight;
-      setY({ y: viewportHeight, height: viewportHeight - 100 });
-    }
-  };
 
   return (
     <animated.div
       className={styles.infoContainer}
       style={{
-        transform: isWidthLessThan500
-          ? y.to((y) => `translate3d(0,${y}px,0)`)
-          : x.to((x) => `translate3d(${x}px,0,0)`),
-        height: height,
+        transform: isMobile ? y.to((y) => `translate3d(0,${y}px,0)`) : "none",
       }}
-      {...(isWidthLessThan500 ? bindY() : bindX())}
     >
-      <div className={styles.scrollBlock}>
-        <div className={styles.scrollIndicator} onClick={onCloseModal}></div>
+      {/* PC 사이드 패널용 닫기 버튼 */}
+      <button className={styles.desktopCloseBtn} onClick={onClose}>
+        <MdClose size={20} color="#4b5563" />
+      </button>
+
+      {/* 모바일 바텀시트용 터치/드래그 핸들 */}
+      <div className={styles.scrollBlock} {...(isMobile ? bindY() : {})}>
+        <div className={styles.scrollIndicator}></div>
       </div>
+
       <div className={styles.infoBlock}>
         <div className={styles.infoTitle}>
           <a href={`/${data[idx].post_id}`}>{data[idx].name}</a>
         </div>
-        <div>{data[idx].address}</div>
-        <div>
+        <div className={styles.infoAddress}>{data[idx].address}</div>
+
+        <div className={styles.swiperContainer}>
           <ImgSwiper images={data[idx].image_urls} singleImage={true} />
         </div>
+
         <div className={styles.textContainer}>
           <div className={styles.contentWrap}>
             <div className={styles.icon}>
@@ -98,8 +80,8 @@ export default function SwipeModal({ data, idx }: Props) {
               {data[idx].menu
                 .split(",")
                 .map((menuInfo) => menuInfo.split(" "))
-                .map((ele, idx) => (
-                  <div className={styles.category} key={idx}>
+                .map((ele, index) => (
+                  <div className={styles.category} key={index}>
                     <div className={styles.menuName}>{ele[0]}</div>
                     <div className={styles.menuPrice}>{ele[1]}</div>
                   </div>
@@ -111,9 +93,9 @@ export default function SwipeModal({ data, idx }: Props) {
               <MdAccessTime />
             </div>
             <div className={styles.time}>
-              {data[idx].time.split("/").map((info, idx) => (
-                <div key={idx}>
-                  <div className={styles.addressContent}>{info}</div>
+              {data[idx].time.split("/").map((info, index) => (
+                <div key={index} className={styles.addressContent}>
+                  {info}
                 </div>
               ))}
             </div>
